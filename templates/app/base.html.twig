@@ -26,7 +26,7 @@
         <div class="container-fluid my-5">
             <div class="row">
                 {{ include("app/partials/_sidemenu.html.twig") }}
-                <main class="col-lg-8">{% block body %}{% endblock %}</main>
+                <main {% block mainClass %}class="col-lg-8"{% endblock %}>{% block body %}{% endblock %}</main>
                 {{ include("app/partials/_sidecart.html.twig") }}
             </div>
         </div>

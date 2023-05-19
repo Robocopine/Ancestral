@@ -2,3 +2,23 @@
 
 Accueil : Accueil
 Inscription : Inscription
+
+
+#
+# FORM
+#
+
+# Registration
+
+user.email.label : Email
+user.email.placeholder : Entrez votre adresse email (courriel) - Exemple "xxx@mail.com"
+user.lastName.label : Nom de famille
+user.lastName.placeholder : Entrez votre nom de famille - Exemple "Dupont"
+user.firstName.label : Prénom
+user.firstName.placeholder : Entrez votre prénom - Exemple "Jean"
+user.password.label1 : Mot de passe
+user.password.label2 : Confirmation mot de passe
+user.password.placeholder1 : Entrez votre mot de passe
+user.password.placeholder2 : Repétez votre mot de passe à l'identique
+user.password.invalidMessage : Veuillez entrer deux mots de passe identiques
+
