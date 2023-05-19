@@ -1,6 +1,6 @@
-<!DOCTYPE html>
+{# templates/app/security/register.html.twig -- Display of Register Form #}
 
-<title>Register</title>
+{% extends 'app/base.html.twig' %}
 
 {% block body %}
     {% for flash_error in app.flashes('verify_email_error') %}
