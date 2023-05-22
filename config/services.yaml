@@ -24,7 +24,11 @@ services:
     # please note that last definitions always *replace* previous ones
     App\Service\LoginService:
         arguments :
-            $templatePath: 'app/partials/_login.html.twig'
+            $templatePath: 'app/partials/_userForm.html.twig'
+
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\Service\PaginationService:
+        arguments :
+            $templatePath: 'admin/partials/_pagination.html.twig'

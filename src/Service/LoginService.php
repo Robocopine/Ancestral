@@ -8,6 +8,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginService {
 
+
     public function __construct(RequestStack $request, AuthenticationUtils $authenticationUtils, $templatePath, Environment $twig){
         $this->errorLogin = $authenticationUtils->getLastAuthenticationError();
         $this->lastUsername = $authenticationUtils->getLastUsername();

@@ -1,0 +1,39 @@
+{# templates/admin/partials/_pagination.html.twig -- This partials content pagination of all index #}
+
+<div class="row">
+    <div class="col-5">
+        <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">
+        Contient {{dataMinPage}} à {{dataMaxPage}} sur {{dataMax}} entrées
+        </div>
+    </div>
+    <div class="col-7">
+        <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+        <ul class="pagination float-md-center ">
+            <li class="paginate_button page-item previous {% if page == 1 %}disabled{% endif %}" id="dataTable_previous">
+            <a href="{{ path(route, {'page' : 1})}}" class="page-link"><i class="fas fa-angle-double-left"></i></a>
+            </li>
+            {% if page != 1 %}
+            <li class="paginate_button page-item previous {% if page == 1 %}disabled{% endif %}" id="dataTable_previous">
+                <a href="{{ path(route, {'page' : page - 1})}}" class="page-link"><i class="fas fa-angle-left"></i></a>
+            </li>
+            {% endif %}
+            {% for i in 1..pages %}
+            {% if i >= min  and i <= max %}
+                <li class="paginate_button page-item {% if page == i %}active{% endif %}">
+                <a href="{{ path(route, {'page': i}) }}" class="page-link">{{i}}</a>
+                </li>
+            {% endif %}
+            {% endfor %}
+            {% if page != pages %}
+            <li class="paginate_button page-item next" id="dataTable_next">
+                <a href="{{ path(route, {'page' : page + 1})}}" class="page-link"><i class="fas fa-angle-right"></i></a>
+            </li>
+            {% endif %}
+            <li class="paginate_button page-item next {% if page == pages %}disabled{% endif %}" id="dataTable_next">
+            <a href="{{ path(route, {'page' : pages })}}" class="page-link"><i class="fas fa-angle-double-right"></i></a>
+            </li>
+        </ul>
+        </div>
+    </div>
+</div>
+    

@@ -23,4 +23,18 @@ class PageController extends AbstractController
             'login' => $login
         ]);
     }
+
+    #[Route('/test', name: 'test')]
+    public function test(AuthenticationUtils $authenticationUtils, LoginService $login): Response
+    {
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return $this->render('app/page/index.html.twig', [
+            'controller_name' => 'Accueil',
+            'login' => $login
+        ]);
+    }
 }

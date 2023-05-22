@@ -1,0 +1,15 @@
+{# templates/admin/category/new.html.twig -- Create a new category  #}
+
+{% extends 'admin/base.html.twig' %}
+
+{% block body %}
+    <h1>Create new Category</h1>
+
+    {{ form_start(categoryForm) }}
+        {{ form_widget(categoryForm) }}
+        <button type="submit" class="btn btn-primary">{% trans %}S'inscrire {% endtrans %}</button>
+    {{ form_end(categoryForm) }}
+
+
+    <a href="{{ path('admin_category_index') }}">back to list</a>
+{% endblock %}

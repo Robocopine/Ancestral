@@ -1,0 +1,51 @@
+{# templates/admin/category/index.html.twig -- The index of all categories #}
+
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ controller_name }}{% endblock %}
+
+{% block body %}
+
+<a class="btn btn-primary float-end mt-5" href="{{ path('admin_category_new') }}">+</a>
+
+<h1 class="my-5">Liste des catégories</h1>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for category in pagination.data %}
+        <tr>
+            <td>{{ category.id }}</td>
+            <td>{{ category.name }}</td>
+            <td>
+                <a href="{{ path('admin_category_show', {'id': category.id}) }}" class="text-dark pr-2"><i class="fas fa-eye"></i></a>
+                <a href="{{ path('admin_category_edit', {'id': category.id}) }}"><i class="fas fa-edit"></i></a>
+                {% set textDelete, linkDelete, paramsDelete, modalId = "Êtes vous-sûre de supprimer <b>" ~ category.name ~ "</b>?<br> Vous perdrez toutes les informations.", "admin_category_delete", {'id': category.id}, category.id  %}
+                {{ include("/admin/partials/_delete.html.twig") }}
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#deleteModal{{category.id}}">
+                    <span><a class="text-danger"><i class="fas fa-trash"></i></a></span>
+                </button>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="3">Aucune catégorie enregistrée</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="6" class="pt-4pb-0">
+                {{ pagination.display() }}
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+{% endblock %}

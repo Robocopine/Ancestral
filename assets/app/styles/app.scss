@@ -1,13 +1,25 @@
 @import url('./style.css');
 
-body{
-    position: relative!important;
-}
-#register {
- max-width: 56pc!important;
-}
-
-footer{
-    bottom: 0!important;
-    width: 100%;
+#userForm{
+    .modal-dialog{
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        border: none;
+        .modal-content{
+            border: none;
+            border-radius: 0;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            max-width: none;
+            .modal-body {
+                overflow-y: auto; 
+                iframe{
+                    height :99%;
+                }
+            }
+        }
+        
+    }
 }

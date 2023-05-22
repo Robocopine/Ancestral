@@ -1,42 +1,32 @@
-<!DOCTYPE html>
+{# templates/admin/user/show.html.twig -- Show a user #}
 
-<title>User</title>
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Membre : {{ controller_name }}{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
+<h1 class="h3 my-5">Membre : {{ controller_name }}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
-            </tr>
-            <tr>
-                <th>IsVerified</th>
-                <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>FirstName</th>
-                <td>{{ user.firstName }}</td>
-            </tr>
-            <tr>
-                <th>LastName</th>
-                <td>{{ user.lastName }}</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="card text-center">
+    <div class="card-header">
+        <h2 class="h5">Fiche de renseignement du membre : {{user.fullName}} </h2>
+    </div>
+    <div class="card-body row text-start p-0">
+        <div class="col-md-6 text-center my-auto">avatar</div>
+        <div class="col-md-6 border-start p-5 my-auto" >
+            <p>Nom : <b>{{user.fullName}}</b>
+                {% if 'ROLE_WEBMASTER' in user.roles %} (WEBMASTER){% elseif 'ROLE_ADMIN' in user.roles  %}(ADMIN){% endif %}
+            </p>
+            <p>Email : {{user.email}} {% if user.isVerified %}<span class="badge rounded-pill text-bg-success" title="Email vérifié">&nbsp;</span>
+                {% else %}<span class="badge rounded-pill text-bg-danger" title="Email non vérifié">&nbsp;</span></p>{% endif %}
+        </div>
+        <div class="col-12 border-top text-center">adresse</div>
+    </div>
+    <div class="card-footer text-body-secondary">
+        <a href="{{ path('admin_user_index') }}">back to list</a>
 
-    <a href="{{ path('app_admin_user_index') }}">back to list</a>
+        <a href="{{ path('admin_user_edit', {'id': user.id}) }}">edit</a>
+    </div>
+</div>
 
-    <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}">edit</a>
-
-    {{ include('admin_user/_delete_form.html.twig') }}
 {% endblock %}

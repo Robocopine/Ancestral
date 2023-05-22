@@ -1,0 +1,20 @@
+{# templates/admin/partials/_delete.html.twig -- A modal in partials to delete element in all index #}
+
+<div class="modal fade" id="deleteModal{{modalId}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" >
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        {{textDelete|raw}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Annuler</button>
+        <form method="post" action="{{ path( linkDelete, paramsDelete) }}">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+            <button class="btn btn-danger">Delete</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
