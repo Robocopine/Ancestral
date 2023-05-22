@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
-use App\Form\UserType;
+use App\Form\Admin\UserType;
 use App\Repository\UserRepository;
 use App\Service\PaginationService;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,10 +11,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/admin/client')]
+#[Route('/admin/client', name: 'admin_user_')]
 class AdminUserController extends AbstractController
 {
-    #[Route('s/{page<\d+>?1}', name: 'admin_user_index', methods: ['GET'])]
+    #[Route('s/{page<\d+>?1}', name: 'index', methods: ['GET'])]
     public function index(PaginationService $pagination, UserRepository $userRepository, $page): Response
     {
         $pagination->setEntityClass(User::class)
@@ -29,7 +29,7 @@ class AdminUserController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'admin_user_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'show', methods: ['GET'])]
     public function show(User $user): Response
     {
         return $this->render('admin/user/show.html.twig', [
@@ -38,7 +38,7 @@ class AdminUserController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/modifier', name: 'admin_user_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/modifier', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, UserRepository $userRepository): Response
     {
         $form = $this->createForm(UserType::class, $user);
@@ -57,7 +57,7 @@ class AdminUserController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/supprimer', name: 'admin_user_delete', methods: ['POST'])]
+    #[Route('/{id}/supprimer', name: 'delete', methods: ['POST'])]
     public function delete(Request $request, User $user, UserRepository $userRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {

@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Category;
-use App\Form\CategoryType;
+use App\Form\Admin\CategoryType;
 use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,10 +11,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\PaginationService;
 
-#[Route('/admin/categorie')]
+#[Route('/admin/categorie', name: 'admin_category_')]
 class AdminCategoryController extends AbstractController
 {
-    #[Route('s/{page<\d+>?1}', name: 'admin_category_index', methods: ['GET'])]
+    #[Route('s/{page<\d+>?1}', name: 'index', methods: ['GET'])]
     public function index(PaginationService $pagination, CategoryRepository $categoryRepository, $page): Response
     {
         $pagination->setEntityClass(Category::class)
@@ -29,7 +29,7 @@ class AdminCategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'admin_category_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
     public function new(Request $request, CategoryRepository $categoryRepository): Response
     {
         $category = new Category();
@@ -48,7 +48,7 @@ class AdminCategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'admin_category_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'show', methods: ['GET'])]
     public function show(Category $category): Response
     {
         return $this->render('admin/category/show.html.twig', [
@@ -56,7 +56,7 @@ class AdminCategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'admin_category_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Category $category, CategoryRepository $categoryRepository): Response
     {
         $form = $this->createForm(CategoryType::class, $category);
@@ -74,7 +74,7 @@ class AdminCategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'admin_category_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'delete', methods: ['POST'])]
     public function delete(Request $request, Category $category, CategoryRepository $categoryRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
