@@ -1,0 +1,7 @@
+#
+# FORM
+#
+
+# Registration
+
+user.password.invalidMessage : Veuillez entrer deux mots de passe identiques

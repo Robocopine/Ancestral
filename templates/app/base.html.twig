@@ -19,17 +19,19 @@
     </head>
     <body>
         {{ include("app/partials/_navtop.html.twig") }}
-        {% if app.user is null %}
+        {% if 'account_' not in app.request.attributes.get('_route') %}
             {{ login.display() }}
         {% endif %}
         {{ include("app/partials/_header.html.twig") }}
-        <div class="container-fluid my-5">
+        <div class="container-fluid">
             <div class="row">
                 {{ include("app/partials/_sidemenu.html.twig") }}
-                <main {% block mainClass %}class="col-lg-8"{% endblock %}>{% block body %}{% endblock %}</main>
+                <main {% block mainClass %}class="col-lg-8 mt-5 pb-5"{% endblock %}>{% block body %}{% endblock %}</main>
                 {{ include("app/partials/_sidecart.html.twig") }}
             </div>
         </div>
-        {{ include("app/partials/_footer.html.twig") }}
+        <footer class="py-5 mt-5 bg-dark bottom-0 {% block positionFooter %} position-absolute {% endblock %}">
+            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+        </footer>
     </body>
 </html>

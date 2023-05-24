@@ -1,0 +1,19 @@
+{% extends 'app/base.html.twig' %}
+
+{% block title %}{{ controller_name }}{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <h1 class="h3 mb-5">Mon compte</h1>
+    <p>
+        Bienvenue <b>{{user.firstName}}</b> dans votre compte.<br/>
+        C'est dans cet espace que vous pouvez gérer vos informations personnelles et gérer vos commandes.
+    </p>
+    <hr class="my-5">
+    <ul>
+        <li><a href="{{ path('account_edit') }}">Modifier mes informations personnelles</a></li>
+        <li><a href="">Modifier mes adresses</a></li>
+        <li><a href="">Gérer mes commandes</a></li>    
+    </ul>
+</div>
+{% endblock %}

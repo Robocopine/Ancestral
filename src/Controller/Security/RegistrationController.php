@@ -5,7 +5,7 @@ namespace App\Controller\Security;
 use App\Entity\User;
 use App\Service\LoginService;
 use App\Security\EmailVerifier;
-use App\Form\Security\RegistrationFormType;
+use App\Form\Security\RegistrationType;
 use Symfony\Component\Mime\Address;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -27,10 +27,10 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/register', name: 'register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, LoginService $login): Response
+    public function register(Request $request, UserPasswordHasherInterface $passwordEncoder, EntityManagerInterface $entityManager, LoginService $login): Response
     {
         $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

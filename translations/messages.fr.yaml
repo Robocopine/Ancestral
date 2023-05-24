@@ -16,9 +16,16 @@ user.lastName.label : Nom de famille
 user.lastName.placeholder : Entrez votre nom de famille - Exemple "Dupont"
 user.firstName.label : Prénom
 user.firstName.placeholder : Entrez votre prénom - Exemple "Jean"
-user.password.label1 : Mot de passe
-user.password.label2 : Confirmation mot de passe
-user.password.placeholder1 : Entrez votre mot de passe
-user.password.placeholder2 : Repétez votre mot de passe à l'identique
-user.password.invalidMessage : Veuillez entrer deux mots de passe identiques
+user.password.label : Mot de passe
+user.passwordConfirm.label : Confirmation mot de passe
+user.password.placeholder : Entrez votre mot de passe
+user.passwordConfirm.placeholder : Repétez votre mot de passe à l'identique
 
+# Account
+
+user.currentPassword.label : Mot de passe actuel
+user.currentPassword.placeholder : Entrez votre mot de passe actuel
+user.newPassword.label : Nouveau mot de passe
+user.newPasswordConfirm.label : Confirmation du nouveau mot de passe
+user.newPassword.placeholder : Entrez votre mot de passe
+user.newPasswordConfirm.placeholder : Repétez votre mot de passe à l'identique

@@ -2,24 +2,23 @@
 
 #userForm{
     .modal-dialog{
-        height: 100vh;
-        margin: 0;
-        padding: 0;
-        border: none;
+        height: 400px;
         .modal-content{
-            border: none;
-            border-radius: 0;
-            height: 100vh;
-            margin: 0;
-            padding: 0;
-            max-width: none;
+
+            height: 400px;
+
             .modal-body {
+                height: 400px;
                 overflow-y: auto; 
                 iframe{
-                    height :99%;
+                    height: 300px;
                 }
             }
         }
         
     }
+}
+
+footer{
+    width: 100%;
 }

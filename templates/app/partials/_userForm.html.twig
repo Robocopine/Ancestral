@@ -1,6 +1,6 @@
 
 
-<div id="userForm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+{% if app.user is null %}<div id="userForm" class="modal fade" tabindex="-1"  role="dialog" aria-labelledby="gridSystemModalLabel">
   <div class="modal-dialog"  role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -8,7 +8,9 @@
         <h4 class="modal-title"></h4>
       </div>
       <div class="modal-body">
-        <iframe frameborder="0" scrolling="no" border="0" cellspacing="0" width="100%" src="{{ path('login')}}"></iframe>
+        <iframe frameborder="0" scrolling="no" border="0" cellspacing="0" width="100%" src="
+          {{ path('login')}}">
+        </iframe>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
@@ -16,6 +18,4 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
-
-
+{% endif %}

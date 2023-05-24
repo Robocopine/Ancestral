@@ -1,0 +1,15 @@
+{% extends 'app/base.html.twig' %}
+
+{% block title %}{{ controller_name }}{% endblock %}
+
+{% block body %}
+<div class="container-fluid my-5">
+    <h1 class="h3 mb-5">Mon compte</h1>
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-primary mt-3">{% trans %}Modifier{% endtrans %}</button>
+    {{ form_end(form) }}
+</div>
+{% endblock %}
+
+{% block positionFooter %}position-relative{% endblock %}
