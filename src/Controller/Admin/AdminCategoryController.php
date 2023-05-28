@@ -21,7 +21,6 @@ class AdminCategoryController extends AbstractController
                 ->setLimit(15)
                 ->setPage($page);
         ;
-        $userRepository = $pagination->getData();
 
         return $this->render('admin/category/index.html.twig', [
             'controller_name' => 'Catégories',
@@ -44,7 +43,7 @@ class AdminCategoryController extends AbstractController
 
         return $this->renderForm('admin/category/new.html.twig', [
             'category' => $category,
-            'form' => $form,
+            'categoryForm' => $form,
         ]);
     }
 

@@ -10,7 +10,7 @@
         <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Annuler</button>
         <form method="post" action="{{ path( linkDelete, paramsDelete) }}">
             <input type="hidden" name="_method" value="DELETE">
-            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ modalId) }}">
             <button class="btn btn-danger">Delete</button>
         </form>
 

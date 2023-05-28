@@ -21,7 +21,6 @@ class AdminUserController extends AbstractController
                 ->setLimit(15)
                 ->setPage($page);
         ;
-        $userRepository = $pagination->getData();
 
         return $this->render('admin/user/index.html.twig', [
             'controller_name' => 'Clients',

@@ -1,0 +1,14 @@
+{# templates/admin/product/edit.html.twig -- Edit a product  #}
+
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ controller_name }}{% endblock %}
+
+{% block body %}
+    <h1>Edit Product</h1>
+
+    {{ include('admin/partials/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('admin_product_index') }}">back to list</a>
+
+{% endblock %}
