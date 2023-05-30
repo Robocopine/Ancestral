@@ -15,7 +15,7 @@ use App\Service\PaginationService;
 class AdminCategoryController extends AbstractController
 {
     #[Route('s/{page<\d+>?1}', name: 'index', methods: ['GET'])]
-    public function index(PaginationService $pagination, CategoryRepository $categoryRepository, $page): Response
+    public function index(PaginationService $pagination, $page): Response
     {
         $pagination->setEntityClass(Category::class)
                 ->setLimit(15)

@@ -15,6 +15,7 @@ class PaginationService {
   private $templatePath;
   private $twig;
   private $requestEntity;
+  private $requestEntityComplete;
 
   public function __construct(EntityManagerInterface $manager, RequestStack $request, $templatePath, Environment $twig)
   {
@@ -51,9 +52,26 @@ class PaginationService {
     return $this;
   }
 
+  /*
+   * get request to get repo with it
+   */
+  public function getRequestEntityComplete(){
+    return $this->requestEntityComplete;
+  }
+
+  public function setRequestEntityComplete($requestEntityComplete){
+    $this->requestEntityComplete = $requestEntityComplete;
+
+    return $this;
+  }
+
   public function getSpecialRepository()
   {
-    return $this->manager->createQuery($this->requestEntity)->getResult();
+    if(!empty($this->getRequestEntityComplete())){
+      return $this->getRequestEntityComplete()->getResult();
+    }else{
+      return $this->manager->createQuery($this->requestEntity)->getResult();
+    }
   }
 
 
@@ -82,6 +100,8 @@ class PaginationService {
 
     return $this;
   }
+
+  
 
   // Nb of pages (Total \ Limit)
   public function getPages()
@@ -145,20 +165,24 @@ class PaginationService {
   public function getData()
   {
     $offset = $this->currentPage * $this->limit - $this->limit;
-
-    if(empty($this->entityClass)){
-      if(empty($this->getSpecialRepository())){
-        return null;
-      }else{
-        return $this->manager->createQuery($this->requestEntity)->setMaxResults($this->limit)
-        ->setFirstResult($offset)->getResult();
-      }
+    if(!empty($this->getRequestEntityComplete())){
+      return $this->getRequestEntityComplete()->setMaxResults($this->limit)
+      ->setFirstResult($offset)->getResult();;
     }else{
-      $repo = $this->manager->getRepository($this->entityClass);
+
+      if(empty($this->entityClass)){
+        if(empty($this->getSpecialRepository())){
+          return null;
+        }else{
+          return $this->manager->createQuery($this->requestEntity)->setMaxResults($this->limit)
+          ->setFirstResult($offset)->getResult();
+        }
+      }else{
+        $repo = $this->manager->getRepository($this->entityClass);
+      }
+
+      $data = $repo->findBy([], [], $this->limit, $offset);
     }
-
-    $data = $repo->findBy([], [], $this->limit, $offset);
-
     return $data;
 
   }

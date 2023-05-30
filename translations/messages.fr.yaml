@@ -3,6 +3,9 @@
 Accueil : Accueil
 Inscription : Inscription
 
+# Products
+
+Fermer : Fermer
 
 #
 # FORM
@@ -21,6 +24,17 @@ user.passwordConfirm.label : Confirmation mot de passe
 user.password.placeholder : Entrez votre mot de passe
 user.passwordConfirm.placeholder : Repétez votre mot de passe à l'identique
 
+# Product
+
+product.name.label : Nom du produit
+product.name.placeholder : Entrez le nom du produit
+product.subtitle.label : Sous-titre du produit
+product.subtitle.placeholder : Entrez une briève description du produit
+product.description.label : Description du produit
+product.description.placeholder : Entrez une description détaillée
+product.price.label : Prix du produit
+product.price.placeholder : Entrez le prix du produit
+
 # Account
 
 user.currentPassword.label : Mot de passe actuel
@@ -29,3 +43,9 @@ user.newPassword.label : Nouveau mot de passe
 user.newPasswordConfirm.label : Confirmation du nouveau mot de passe
 user.newPassword.placeholder : Entrez votre mot de passe
 user.newPasswordConfirm.placeholder : Repétez votre mot de passe à l'identique
+
+# Search
+
+search.string.label : Nom du produit
+search.string.placeholder : Entrez le nom du produit que vous cherchez
+search.submit.label : Rechercher

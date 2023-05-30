@@ -1,0 +1,49 @@
+{# templates/app/product/index.html.twig -- shop list of products #}
+
+{% extends 'app/base.html.twig' %}
+
+{% block title %}{{ controller_name }}{% endblock %}
+
+{% block sideMenu %}
+<aside class="col-2 border-end p-5">
+    <h2 class="my-5">Filtrer</h2>
+    <div class="col-10">{{ form(form) }}</div>
+</aside>
+{% endblock %}
+
+{% block body %}
+<h1 class="p-5 ">{{ controller_name }}</h1>
+<!-- Index Content -->
+<div class="row  justify-content-center">
+    {% for product in pagination.data %}
+    <div class="col-4 mb-5 p-4">
+        <div class="card h-100">
+            <!-- Product image-->
+            <button class="btn-illustration" href=""><img class="card-img-top" data-bs-toggle="modal" data-bs-target="#productShow" src="{{ product.illustration }}" alt="..." /></button>
+            <!-- Product details-->
+            <div class="card-body p-4">
+                <div class="text-center">
+                    <!-- Product name-->
+                    <h5 class="fw-bolder">{{ product.subtitle }}</h5>
+                    <!-- Product price-->
+                    {{ product.price }}
+                </div>
+            </div>
+            <!-- Product actions-->
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Voir produit</a></div>
+            </div>
+        </div>
+    </div>
+    {% include("app/product/show.html.twig")  with {'product': product} %}
+    {% else %}
+        <span class="float-sm-start p-5 ms-5">Pas de produits dans cette catégorie</span>
+    {% endfor %}
+    <div class="col-12 text-center">
+        {{ pagination.display() }}
+    </div>
+</div>
+
+{% endblock %}
+
+{% block positionFooter %} position-relative {% endblock %}
