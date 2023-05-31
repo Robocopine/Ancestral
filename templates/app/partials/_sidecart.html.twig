@@ -1,3 +1,12 @@
 {# templates/app/partials/_sidecart.html.twig -- Side cart of app template  #}
 
-<aside class="col-2 border-start"></aside>
+<aside class="col-2 border-start p-5 mt-5">
+    <h3 class="text-center">Mon panier <i class="fa-solid fa-basket-shopping ms-1"></i></h3>
+    <ul class="p-5">
+        {% for products in cartFull %}
+            {% set product = products.product %}
+            <li>{{ products.quantity }}x <b class="ms-1">{{ product.subtitle }}</b></li>
+        {% endfor %}
+    </ul>
+    <p class="text-center"><a class="btn btn-primary btn-block" href="">Accéder au panier</a></p>
+</aside>

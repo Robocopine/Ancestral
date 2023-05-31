@@ -19,11 +19,22 @@
                 </li>
             </ul>
             <form class="d-flex">
-                <button class="btn btn-outline-dark me-3" type="submit">
+                <a class="btn btn-outline-dark me-3" href="{{ path('cart_index') }}">
                     <i class="fa-solid fa-basket-shopping me-1"></i>
                     Cart
-                    <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                </button>
+                    <span class="badge bg-dark text-white ms-1 rounded-pill">
+                        {% if app.session.get('cart') %}
+                            {% set cart  = app.session.get('cart') %}
+                            {% set total = null %}
+                            {% for product in cart %}
+                                {% set total =+ product %}
+                            {% endfor %}
+                            {{ total }}
+                        {% else %}
+                            0
+                        {% endif %}
+                    </span>
+                </a>
             </form>
             {% if app.user is null %}
                 <!-- Button trigger modal -->

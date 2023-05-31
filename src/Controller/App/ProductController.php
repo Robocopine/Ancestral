@@ -2,10 +2,11 @@
 
 namespace App\Controller\App;
 
-use App\Entity\Search;
+use App\Classe\Search;
 use App\Entity\Product;
 use App\Entity\Category;
 use App\Form\App\SearchType;
+use App\Service\CartService;
 use App\Service\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +25,7 @@ class ProductController extends AbstractController
     }
 
     #[Route('s/{page<\d+>?1}', name: '_index')]
-    public function index(Request $request, PaginationService $pagination, $page): Response
+    public function index(Request $request, PaginationService $pagination, CartService $sessionCart, $page): Response
     {
         $products = $this->entityManager->getRepository(Product::class)->findAll();
 
@@ -56,6 +57,7 @@ class ProductController extends AbstractController
             'controller_name' => 'Nos produits',
             'pagination' => $pagination,
             'form' => $form,
+            'sessionCart' => $sessionCart,
         ]);
     }
 }

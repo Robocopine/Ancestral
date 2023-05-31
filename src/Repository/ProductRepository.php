@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Search;
+use App\Classe\Search;
 use App\Entity\Product;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

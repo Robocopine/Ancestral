@@ -28,10 +28,10 @@
             <div class="row">
                 {% block sideMenu %}{{ include("app/partials/_sidemenu.html.twig") }}{% endblock %}
                 <main {% block mainClass %}class="col-lg-8 mt-5 pb-5"{% endblock %}>{% block body %}{% endblock %}</main>
-                {{ include("app/partials/_sidecart.html.twig") }}
+                {% block sideCart %}{% endblock %}
             </div>
         </div>
-        <footer class="py-5 mt-5 bg-dark bottom-0 {% block positionFooter %} position-absolute {% endblock %}">
+        <footer class="py-5 mt-5 bg-dark bottom-0 {% block positionFooter %} position-relative {% endblock %}">
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
         </footer>
     </body>

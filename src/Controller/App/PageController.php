@@ -2,6 +2,7 @@
 
 namespace App\Controller\App;
 
+use App\Service\CartService;
 use App\Service\LoginService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,10 +12,11 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class PageController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function index(AuthenticationUtils $authenticationUtils): Response
+    public function index(AuthenticationUtils $authenticationUtils, CartService $sessionCart): Response
     {
         return $this->render('app/page/index.html.twig', [
             'controller_name' => 'Accueil',
+            'sessionCart' => $sessionCart,
         ]);
     }
 
