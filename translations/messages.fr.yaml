@@ -49,3 +49,9 @@ user.newPasswordConfirm.placeholder : Repétez votre mot de passe à l'identique
 search.string.label : Nom du produit
 search.string.placeholder : Entrez le nom du produit que vous cherchez
 search.submit.label : Rechercher
+
+# Order 
+
+orderDetails.addresses.label : Mes adresses
+orderDetails.carriers.label : Livraison
+orderDetails.submit.label : Valider la commande

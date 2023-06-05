@@ -1,0 +1,55 @@
+{# templates/app/order/index.html.twig -- show order informations #}
+
+{% extends 'app/base.html.twig' %}
+
+{% block title %}{{ controller_name }}{% endblock %}
+
+{% block mainClass %}class="col-12"{% endblock %}
+
+{% block body %}
+<div class="p-5">
+    <h2>Ma commande</h2>
+    <p>Renseignez les informations relatives à votre commande</p>
+</div>
+<hr class="my-0">
+{{ form_start(form) }}
+    {% set formHtml %}
+        <div class="row">
+            <div class="col-6 py-5 px-5">
+                <h3>Choisir mon adresse de livraison</h3>
+                <div class="{%  if app.user.addresses is empty %}d-none{% endif %}" >
+                    {{ form_row(form.addresses) }}
+                </div>
+                {%  if app.user.addresses is empty %}
+                <p class="p-3">Aucune adresse</p>
+                {% endif %}
+                <p><a href="" class="">Ajouter une nouvelle adresse</a></p>
+                <h3>Choisir mon transporteur</h3>
+                {{ form_row(form.carriers) }} 
+            </div>
+            <div class="col-6 border-start py-5">
+                <h3 class="text-center">Mon panier <i class="fa-solid fa-basket-shopping ms-1"></i></h3>
+                <ul class="py-3 container-fluid">
+                    {% for products in cartFull %}
+                        {% set product = products.product %}
+                        <div class="row">
+                            <div class="col-2 my-auto ps-5">
+                                <img src="{{ product.illustration }}" alt="{{ product.name }}" width="50px" class="rounded img-fluid me-2" />
+                            </div>
+                            <div class="col-10 my-auto">{{ products.quantity }}x <b class="ms-1">{{ product.subtitle }}</b></div>
+                        </div>
+                    {% endfor %}
+                </ul>
+            </div>
+            <hr>
+            <div class="col text-center py-5">{{ form_row(form.submit) }} </div>
+        </div>
+    {% endset %}
+    {{ formHtml|replace({'[br]' : '<br/>'})|raw }}
+{{ form_end(form) }}
+
+{% endblock %}
+
+{% block sideCart %}
+    
+{% endblock %}

@@ -14,7 +14,7 @@ use App\Controller\Admin\AdminProductController;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/admin/produit', name: 'admin_product_')]
-class AdminProductController extends AbstractController
+class ProductController extends AbstractController
 {
     #[Route('s/{page<\d+>?1}', name: 'index', methods: ['GET'])]
     public function index(PaginationService $pagination, ProductRepository $productRepository, $page): Response

@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Service\PaginationService;
 
 #[Route('/admin/categorie', name: 'admin_category_')]
-class AdminCategoryController extends AbstractController
+class CategoryController extends AbstractController
 {
     #[Route('s/{page<\d+>?1}', name: 'index', methods: ['GET'])]
     public function index(PaginationService $pagination, $page): Response

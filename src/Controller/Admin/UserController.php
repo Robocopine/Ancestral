@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/admin/client', name: 'admin_user_')]
-class AdminUserController extends AbstractController
+class UserController extends AbstractController
 {
     #[Route('s/{page<\d+>?1}', name: 'index', methods: ['GET'])]
     public function index(PaginationService $pagination, UserRepository $userRepository, $page): Response

@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Carrier;
-use App\Form\CarrierType;
+use App\Form\App\CarrierType;
 use App\Service\PaginationService;
 use App\Repository\CarrierRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/admin/carrier', name: 'admin_carrier_')]
-class AdminCarrierController extends AbstractController
+class CarrierController extends AbstractController
 {
     #[Route('s/{page<\d+>?1}', name: 'index', methods: ['GET'])]
     public function index(CarrierRepository $carrierRepository, PaginationService $pagination, $page): Response
