@@ -13,10 +13,7 @@
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
-
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
+        {{ encore_entry_script_tags('app') }}
     </head>
     <body>
         {{ include("app/partials/_navtop.html.twig") }}
@@ -34,5 +31,7 @@
         <footer class="py-5 mt-5 bg-dark bottom-0 {% block positionFooter %} position-relative {% endblock %}">
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
         </footer>
+
+        {% block javascripts %}{% endblock %}
     </body>
 </html>

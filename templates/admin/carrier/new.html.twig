@@ -1,0 +1,11 @@
+{# templates/admin/carrier/new.html.twig -- Create a new carrier  #}
+
+{% extends 'admin/base.html.twig' %}
+
+{% block body %}
+    <h1>Create new Carrier</h1>
+
+    {{ include('admin/partials/_form.html.twig') }}
+    <a href="{{ path('admin_carrier_index') }}">back to list</a>
+
+{% endblock %}

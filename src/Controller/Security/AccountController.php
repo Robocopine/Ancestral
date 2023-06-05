@@ -2,9 +2,9 @@
 
 namespace App\Controller\Security;
 
+use App\Entity\Address;
 use App\Security\EmailVerifier;
 use App\Form\Security\AccountType;
-use Symfony\Component\Mime\Address;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,6 +37,7 @@ class AccountController extends AbstractController
     {
         $user = $this->getUser();
         $oldEmail = $this->getUser()->getEmail();
+        $address = new Address();
         $form = $this->createForm(AccountType::class, $user);
         $form->handleRequest($request);
         
@@ -53,6 +54,11 @@ class AccountController extends AbstractController
                         )
                     );
                 }
+            }
+
+            foreach($user->getAddresses() as $address){
+                $address->setUser($user);
+                $entityManager->persist($address);
             }
 
             if($oldEmail != $form->get('email')->getData()){

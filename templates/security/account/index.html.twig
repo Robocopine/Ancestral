@@ -4,7 +4,7 @@
 
 {% block body %}
 <div class="container-fluid">
-    <h1 class="h3 mb-5">Mon compte</h1>
+    <h1 class="h2 mb-5">Mon compte</h1>
     <p>
         Bienvenue <b>{{user.firstName}}</b> dans votre compte.<br/>
         C'est dans cet espace que vous pouvez gérer vos informations personnelles et gérer vos commandes.
@@ -15,5 +15,23 @@
         <li><a href="">Modifier mes adresses</a></li>
         <li><a href="">Gérer mes commandes</a></li>    
     </ul>
+
+    <hr class="my-5">
+
+    <a href="" class="btn btn-primary  float-end">Ajouter une adresse</a>
+    <h2 class="h3 mb-5">Mes adresses</h1>
+
+    {% if user.addresses is not empty %}
+        {# for %}
+        {% endfor #}
+
+    {% else %}
+        <p class="text-center">
+            Vous n'avez pas encore enregistré une adresse dans votre compte client.
+            Pour en ajouter une, <a href="">cliquez ici</a>.
+        </p>
+    {% endif %}
+
 </div>
 {% endblock %}
+

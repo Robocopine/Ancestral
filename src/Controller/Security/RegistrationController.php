@@ -3,10 +3,11 @@
 namespace App\Controller\Security;
 
 use App\Entity\User;
+use App\Service\CartService;
 use App\Service\LoginService;
 use App\Security\EmailVerifier;
-use App\Form\Security\RegistrationType;
 use Symfony\Component\Mime\Address;
+use App\Form\Security\RegistrationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +28,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/register', name: 'register')]
-    public function register(Request $request, UserPasswordHasherInterface $passwordEncoder, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordHasherInterface $passwordEncoder, EntityManagerInterface $entityManager, CartService $sessionCart): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationType::class, $user);
@@ -38,7 +39,7 @@ class RegistrationController extends AbstractController
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
-                    $form->get('plainPassword')->getData()
+                    $form->get('plainPassword')->getData(),
                 )
             );
 
@@ -61,6 +62,7 @@ class RegistrationController extends AbstractController
         return $this->render('security/register.html.twig', [
             'registrationForm' => $form->createView(),
             'controller_name' => 'Inscription',
+            'sessionCart' => $sessionCart,
         ]);
     }
 

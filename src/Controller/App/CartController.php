@@ -5,6 +5,7 @@ namespace App\Controller\App;
 use App\Classe\Cart;
 use App\Entity\Product;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,11 +29,17 @@ class CartController extends AbstractController
     }
 
     #[Route('/ajouter/{id}', name: '_add')]
-    public function add(Cart $cart, $id)
+    public function add(Cart $cart, Request $request, $id)
     {
        $cart->add($id);
 
-       return $this->redirectToroute('cart_index');
+       return $this->redirectToroute('product_index');
+    }
+
+    #[Route('/diminuer/{id}', name: '_decrease')]
+    public function descrease(Cart $cart, Request $request, $id)
+    {
+        $cart->decrease($id);
     }
 
     #[Route('/enlever/{id}', name: '_remove')]
@@ -49,13 +56,5 @@ class CartController extends AbstractController
         $cart->delete($id);
         return $this->redirectToroute('cart_index');
 
-    }
-
-    #[Route('/diminuer/{id}', name: '_decrease')]
-    public function descrease(Cart $cart, $id)
-    {
-        $cart->decrease($id);
-
-        return $this->redirectToroute('cart_index');
     }
 }
