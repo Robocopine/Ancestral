@@ -6,26 +6,32 @@
 
 {% block mainClass %}class="col-12"{% endblock %}
 
+{% form_theme form _self %}
+
 {% block body %}
 <div class="p-5">
     <h2>Ma commande</h2>
     <p>Renseignez les informations relatives à votre commande</p>
 </div>
 <hr class="my-0">
-{{ form_start(form) }}
+{{ form_start(form, {action:path('order_resume')}) }}
     {% set formHtml %}
         <div class="row">
             <div class="col-6 py-5 px-5">
                 <h3>Choisir mon adresse de livraison</h3>
-                <div class="{%  if app.user.addresses is empty %}d-none{% endif %}" >
-                    {{ form_row(form.addresses) }}
+                <div class="p-3">
+                    <div class="row {%  if app.user.addresses is empty %}d-none{% endif %}" >
+                        {{ form_row(form.addresses) }}
+                    </div>
+                    {%  if app.user.addresses is empty %}
+                    <p class="p-3">Aucune adresse</p>
+                    {% endif %}
+                    <button type="button" class="btn btn-primary mb-3 mt-2" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+                        Ajouter une nouvelle adresse
+                    </button>
+                    <h3>Choisir mon transporteur</h3>
+                    {{ form_row(form.carriers) }} 
                 </div>
-                {%  if app.user.addresses is empty %}
-                <p class="p-3">Aucune adresse</p>
-                {% endif %}
-                <p><a href="" class="">Ajouter une nouvelle adresse</a></p>
-                <h3>Choisir mon transporteur</h3>
-                {{ form_row(form.carriers) }} 
             </div>
             <div class="col-6 border-start py-5">
                 <h3 class="text-center">Mon panier <i class="fa-solid fa-basket-shopping ms-1"></i></h3>
@@ -36,7 +42,8 @@
                             <div class="col-2 my-auto ps-5">
                                 <img src="{{ product.illustration }}" alt="{{ product.name }}" width="50px" class="rounded img-fluid me-2" />
                             </div>
-                            <div class="col-10 my-auto">{{ products.quantity }}x <b class="ms-1">{{ product.subtitle }}</b></div>
+                            <div class="col-8 my-auto">{{ products.quantity }}x <b class="ms-1">{{ product.subtitle }}</b></div>
+                            <div class="col-2 my-auto">{{ ((product.price * products.quantity) / 100)|number_format(2, ',', '.') }} €</div>
                         </div>
                     {% endfor %}
                 </ul>
@@ -48,8 +55,38 @@
     {{ formHtml|replace({'[br]' : '<br/>'})|raw }}
 {{ form_end(form) }}
 
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            {{ form_start(formAddress) }}
+                <div class="modal-header px-5 py-3">
+                    <h1 class="modal-title fs-5" id="exampleModalCenterTitle">Ajouter une adresse</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-5">
+                    {{ form_widget(formAddress) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="button" type="submit" class="btn btn-primary">Ajouter l'adresse</button>
+                </div>
+            {{ form_end(formAddress) }}
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
-{% block sideCart %}
-    
+{% block _order_addresses_entry_widget %}
+    <div class="col-5 card p-3">
+        {{ form_widget(form) }}
+    </div>
 {% endblock %}
+
+{% block _order_carriers_entry_widget %}
+    <div class="col-5 card p-3">
+        {{ form_widget(form) }}
+    </div>
+{% endblock %}
+
+{% block sideCart %}{% endblock %}

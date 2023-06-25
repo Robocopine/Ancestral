@@ -1,0 +1,75 @@
+<!-- Vertically centered scrollable modal -->
+<div id="productShow" tabindex="-1"  role="dialog" class="modal fade "  aria-labelledby="productShowLabel" >
+    <div class="modal-dialog modal-xl"  role="document">
+    <div class="modal-content container-fluid">
+      <div class="modal-header">
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title ">{{ product.name }}</h4>
+      </div>
+      <div class="modal-body row">
+        <!-- Illustration product -->
+        <div class="col-md-6">
+            <img class="img-thumbnail text-lg-start text-center" src="{{product.illustration}}" alt="{{product.name}}"/>
+        </div>
+        <!-- Informations product -->
+        <div class="col-md-6">
+           <p class="h5 text-center">{{product.subTitle}}</p>
+           <p class="text-justify">{{product.description}}</p>
+        </div>
+        <div class="col-12 text-center">
+            Video
+        </div>
+        <hr>
+        <!-- Comments product -->
+        <div class="col-12 mt-5">
+          <h5 class="mb-5">
+            Avis du produit
+            {% include 'app/product/partials/_rating.html.twig' with {'rating': product.avgRatings }  %} 
+            ({% if  product.comments|length > 0 %}{{ product.comments|length }}{% else %}0{% endif %}) : 
+          </h5>
+          {% if  product.comments|length > 0 %}
+            {% for comment in product.comments %}
+              <p>
+                {% set user = "" %}
+                {% for userComment in users %}
+                  {% if userComment.fullName == comment.author %}
+                    {% set user = userComment %}
+                  {% endif %}
+                {% endfor %}
+                <b>
+                  <img src="{% if user is not empty %}{{ asset('src/user/avatar/null.png') }}{% else %}{{ asset('src/user/avatar/null.png') }}{% endif %}" class="me-1 rounded-circle" width="20px" alt="Avatar {{comment.author}}"> 
+                  {{comment.author}}
+                </b><br/>
+                <span>nb avis + verifié</span><br/>
+                {% include 'app/product/partials/_rating.html.twig' with {'rating': comment.rating}  %}
+                <span class="ms-2">{{comment.createdAt|date("d/m/Y", "Europe/Paris")}}</span>
+              </p>
+            <hr>
+            {% endfor %}
+          {% else %}
+            <span>Aucun avis pour le moment</span>
+          {% endif %}
+          <div class="mt-5">
+            <h5>Ajouter un nouveau commentaire</h5>
+            {{ form_start(formComment) }}
+              {% if app.user %}
+                <div class="py-3">
+                  {{ form_label(formComment.author, 'Auteur') }}
+                  {{ form_widget(formComment.author, {'value': app.user.fullName}) }}
+                </div>
+              {% endif %}
+              {{ form_widget(formComment.product, {'value': product, 'attr':{'class':'d-none'}}) }}
+              {{ form_widget(formComment) }}
+              <button type="submit" class="btn btn-primary">
+                Commenter
+              </button>
+            {{ form_end(formComment) }}
+          </div> 
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">{% trans %}Fermer{% endtrans %}</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>

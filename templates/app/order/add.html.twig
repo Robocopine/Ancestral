@@ -1,0 +1,66 @@
+{# templates/app/order/index.html.twig -- show order informations #}
+
+{% extends 'app/base.html.twig' %}
+
+{% block title %}{{ controller_name }}{% endblock %}
+
+{% block mainClass %}class="col-12"{% endblock %}
+
+{% block body %}
+<div class="p-5">
+    <h2>Résumé de la commande</h2>
+    <p>Vérifiez vos infomrations avant de payer votre commande</p>
+</div>
+<hr class="my-0">
+
+    <div class="row">
+        <div class="col-6 p-0">
+            <div class="p-5">
+                <h3>Mon adresse de livraison</h3>
+                <p class="p-3">{{ delivery|raw }}</p>
+            </div>
+            <hr>
+            <div class="p-5">
+                <h3>Mon transporteur</h3>
+                <p class="p-3">
+                    <b>{{ carrier.name }}</b><br/>
+                    {{ carrier.description }}<br/>
+                    {{ carrier.price }}
+                </p>
+            </div>
+        </div>
+        <div class="col-6 border-start py-5">
+            <h3 class="text-center">Mon panier <i class="fa-solid fa-basket-shopping ms-1"></i></h3>
+            <ul class="py-3 container-fluid">
+                {% set total = 0 %}
+                {% for products in cartFull %}
+                    {% set product = products.product %}
+                    <div class="row">
+                        <div class="col-2 my-auto ps-5">
+                            <img src="{{ product.illustration }}" alt="{{ product.name }}" width="50px" class="rounded img-fluid me-2" />
+                        </div>
+                        <div class="col-8 my-auto">{{ products.quantity }}x <b class="ms-1">{{ product.subtitle }}</b></div>
+                        <div class="col-2 my-auto">{{ ((product.price * products.quantity) / 100)|number_format(2, ',', '.') }} €</div>
+                    </div>
+                    {% set total =+ (product.price * products.quantity) %}
+                {% endfor %}
+            </ul>
+            <hr>
+            <p><b>Sous-Total : </b> {{ ((total) / 100)|number_format(2, ',', '.') }} €</p>
+            <p><b>Livraison : </b> {{ (carrier.price)|number_format(2, ',', '.') }} €</p>
+            <hr>
+            <p><b>Total : </b> {{ ((total / 100) + carrier.price)|number_format(2, ',', '.') }} €</p>
+        </div>
+        <hr>
+
+        <div class="col text-center py-5">
+            <a class="btn btn-success btn-block">Payer la commande ({{ ((total / 100) + carrier.price)|number_format(2, ',', '.') }} €)</a>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block sideCart %}
+    
+{% endblock %}

@@ -27,11 +27,17 @@ class Order
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $carrierName = null;
 
+    #[ORM\Column]
+    private ?float $carrierPrice = null;
+
     #[ORM\Column(type: Types::TEXT)]
     private ?string $delivery = null;
 
     #[ORM\OneToMany(mappedBy: 'myOrder', targetEntity: OrderDetails::class)]
     private Collection $orderDetails;
+
+    #[ORM\Column]
+    private ?bool $isPaid = null;
 
     public function __construct()
     {
@@ -79,6 +85,18 @@ class Order
         return $this;
     }
 
+    public function getCarrierPrice(): ?float
+    {
+        return $this->carrierPrice;
+    }
+
+    public function setCarrierPrice(float $carrierPrice): self
+    {
+        $this->carrierPrice = $carrierPrice;
+
+        return $this;
+    }
+
     public function getDelivery(): ?string
     {
         return $this->delivery;
@@ -117,6 +135,18 @@ class Order
                 $orderDetail->setMyOrder(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isIsPaid(): ?bool
+    {
+        return $this->isPaid;
+    }
+
+    public function setIsPaid(bool $isPaid): self
+    {
+        $this->isPaid = $isPaid;
 
         return $this;
     }

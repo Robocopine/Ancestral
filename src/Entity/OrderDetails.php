@@ -21,6 +21,9 @@ class OrderDetails
     private ?string $product = null;
 
     #[ORM\Column]
+    private ?int $quantity = null;
+
+    #[ORM\Column]
     private ?float $price = null;
 
     #[ORM\Column]
@@ -51,6 +54,18 @@ class OrderDetails
     public function setProduct(string $product): self
     {
         $this->product = $product;
+
+        return $this;
+    }
+
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(int $quantity): self
+    {
+        $this->quantity = $quantity;
 
         return $this;
     }

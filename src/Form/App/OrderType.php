@@ -25,6 +25,9 @@ class OrderType extends AbstractType
                 'choices' => $user->getAddresses(),
                 'multiple' => false,
                 'expanded' => true,
+                'attr' => [
+                    'class' => 'row justify-content-evenly'
+                ],
             ])
             ->add('carriers', EntityType::class, [
                 'label' => 'orderDetails.carriers.label',
@@ -32,6 +35,9 @@ class OrderType extends AbstractType
                 'class' => Carrier::class,
                 'multiple' => false,
                 'expanded' => true,
+                'attr' => [
+                    'class' => 'row justify-content-evenly'
+                ],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'orderDetails.submit.label',

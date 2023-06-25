@@ -7,7 +7,7 @@
 {% block sideMenu %}
 <aside class="col-2 border-end p-5">
     <h2 class="my-5">Filtrer</h2>
-    <div class="col-10">{{ form(form) }}</div>
+    <div class="col-10">{{ form(formSearch) }}</div>
 </aside>
 {% endblock %}
 
@@ -25,6 +25,8 @@
                 <div class="text-center">
                     <!-- Product name-->
                     <h5 class="fw-bolder">{{ product.subtitle }}</h5>
+                    <span>{% include 'app/product/partials/_rating.html.twig' with {'rating': product.avgRatings }  %} 
+                    ({% if  product.comments|length > 0 %}{{ product.comments|length }}{% else %}0{% endif %}) </span><br>
                     <!-- Product price-->
                     {{ product.price }}
                 </div>
@@ -35,7 +37,7 @@
             </div>
         </div>
     </div>
-    {% include("app/product/show.html.twig")  with {'product': product} %}
+    {% include("app/product/partials/_show.html.twig")  with {'product': product} %}
     {% else %}
         <span class="float-sm-start p-5 ms-5">Pas de produits dans cette catégorie</span>
     {% endfor %}
