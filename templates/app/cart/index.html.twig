@@ -5,69 +5,71 @@
 {% block title %}{{ controller_name }}{% endblock %}
 
 {% block body %}
-<div class="p-5">
-    <h1>Mon panier</h1>
-    <p>Retrouvez l'ensemble des produits que vous avez ajouté à votre panier.</p>
-</div>
+    <div class="border rounded mt-5 align-middle">
+        <div class="p-5">
+            <h1>Mon panier</h1>
+            <p>Retrouvez l'ensemble des produits que vous avez ajouté à votre panier.</p>
+        </div>
 
-<hr>
-{% if cart is not empty %}
-    <table class="table">
-    <thead>
-        <tr>
-        <th scope="col">Produit</th>
-        <th scope="col"></th>
-        <th scope="col">Quantité</th>
-        <th scope="col">Prix</th>
-        <th scope="col">Total</th>
-        <th scope="col"></th>
-        </tr>
-    </thead>
-    <tbody>
-        {% set totalPrice = null %}
-        {% set totalProducts = null %}
-        {% for products in cart %}
-            {% set product = products.product %}
-            <tr>
-                <td scope="row">
-                    <img src="{{ product.illustration }}" alt="{{ product.name }}" height="50px">
-                    
-                </td>
-                <td>
-                    <b>{{ product.name }}</b><br />  
-                    <small>{{ product.subtitle }}</small>
-                </td>
-                <td>
-                    <a class="text-dark btn btn-light fw-bold fs-3 mb-2" href="{{ path('cart_decrease', {'id' : product.id}) }}">
-                        -
-                    </a>
-                    <span>{{ products.quantity }}</span>
-                    <a class="text-dark btn btn-light fw-bold fs-4 mb-2" href="{{ path('cart_add', {'id' : product.id}) }}">
-                        +
-                    </a>
-                </td>
-                <td>{{ (product.price)|number_format(2, ',', '.') }} €</td>
-                <td>{{ (product.price * products.quantity)|number_format(2, ',', '.') }} €</td>
-                <td>
-                    <a class="text-dark" href="{{ path('cart_delete', {'id' : product.id}) }}">
-                        <i class="fa-solid fa-trash"></i>
-                    </a>
-                </td>
-            </tr>
-            {% set totalPrice =+ (product.price * products.quantity) %}
-            {% set totalProducts =+ products.quantity %}
-        {% endfor %}
-        <tr>
-            <td colspan="6" class="text-end">
-                <p><b>Nombre de produit</b> : {{ totalProducts }}</p>
-                <p><b>Total de mon panier</b> : {{ ( totalPrice)|number_format(2, ',', '.') }} €</p>
-            </td>
-        </tr>
-    </tbody>
-    </table>
-    <div class="text-center py-3"> <a class="btn btn-success btn-block" href="{{ path('order_index') }}">Valider mon panier</a> </div> <hr>
-{% else %}
-    <p class="p-5 h5">Le panier est vide.</p>
-    <div class="text-center py-3"><a class="btn btn-primary" href="{{ path('product_index') }}">Retourner aux produits</a></div> <hr>
-{% endif %}
+        <hr>
+        {% if cart is not empty %}
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">Produit</th>
+                    <th scope="col"></th>
+                    <th scope="col">Quantité</th>
+                    <th scope="col">Prix</th>
+                    <th scope="col">Total</th>
+                    <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set totalPrice = null %}
+                    {% set totalProducts = null %}
+                    {% for products in cart %}
+                        {% set product = products.product %}
+                        <tr>
+                            <td scope="row">
+                                <img src="{{ product.illustration }}" alt="{{ product.name }}" height="50px">
+                                
+                            </td>
+                            <td>
+                                <b>{{ product.name }}</b><br />  
+                                <small>{{ product.subtitle }}</small>
+                            </td>
+                            <td>
+                                <a class="text-dark btn btn-light fw-bold fs-3 mb-2" href="{{ path('cart_decrease', {'id' : product.id}) }}">
+                                    -
+                                </a>
+                                <span>{{ products.quantity }}</span>
+                                <a class="text-dark btn btn-light fw-bold fs-4 mb-2" href="{{ path('cart_add', {'id' : product.id}) }}">
+                                    +
+                                </a>
+                            </td>
+                            <td>{{ (product.price)|number_format(2, ',', '.') }} €</td>
+                            <td>{{ (product.price * products.quantity)|number_format(2, ',', '.') }} €</td>
+                            <td>
+                                <a class="text-dark" href="{{ path('cart_delete', {'id' : product.id}) }}">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% set totalPrice =+ (product.price * products.quantity) %}
+                        {% set totalProducts =+ products.quantity %}
+                    {% endfor %}
+                    <tr>
+                        <td colspan="6" class="text-end">
+                            <p><b>Nombre de produit</b> : {{ totalProducts }}</p>
+                            <p><b>Total de mon panier</b> : {{ ( totalPrice)|number_format(2, ',', '.') }} €</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center py-3"> <a class="btn btn-success btn-block" href="{{ path('order_index') }}">Valider mon panier</a> </div> <hr>
+        {% else %}
+            <p class="p-5 h5">Le panier est vide.</p>
+            <div class="text-center py-3"><a class="btn btn-primary" href="{{ path('product_index') }}">Retourner aux produits</a></div> <hr>
+        {% endif %}
+    </div>
 {% endblock %}

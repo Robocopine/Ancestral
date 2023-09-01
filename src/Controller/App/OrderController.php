@@ -7,6 +7,7 @@ use App\Classe\Cart;
 use App\Entity\Order;
 use DateTimeImmutable;
 use App\Entity\Address;
+use Stripe\StripeClient;
 use App\Form\App\OrderType;
 use App\Entity\OrderDetails;
 use App\Form\Security\AddressType;
@@ -56,6 +57,7 @@ class OrderController extends AbstractController
     #[Route('/récapitulatif', name: 'resume', methods: ['POST'])]
     public function add(Cart $cart, Request $request): Response
     {
+    
         $form = $this->createForm(OrderType::class, null, [
             'user' => $this->getUser(),
         ]);
@@ -86,6 +88,7 @@ class OrderController extends AbstractController
 
             $this->entityManager->persist($order);
 
+
             // Save products cart in OrderDetails Entity
             foreach($cart->getFull() as $product){
                 $orderDetails = new OrderDetails();
@@ -94,11 +97,10 @@ class OrderController extends AbstractController
                 $orderDetails->setQuantity($product['quantity']);
                 $orderDetails->setPrice($product['product']->getPrice());
                 $orderDetails->setTotal($product['product']->getPrice() * $product['quantity']);
-
                 $this->entityManager->persist($orderDetails);
             }
 
-            $this->entityManager->flush();
+            // $this->entityManager->flush();
 
             return $this->render('app/order/add.html.twig', [
                 'controller_name' => 'OrderController',

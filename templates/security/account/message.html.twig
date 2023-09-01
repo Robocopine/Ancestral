@@ -1,0 +1,45 @@
+{# templates/security/account/messaging.html.twig -- Messaging #}
+{% extends 'security/base.html.twig' %}
+
+{% block body %}
+  <!-- Active Conversation -->
+  {% if conversation %}
+  <h2 class="section-heading my-3 pb-2 text-center"><span class="section-heading-upper">{% trans %}Conversation avec{% endtrans %} {{recipient.fullName}}</span></h2><hr>
+  <div class="p-5">
+    {% for message in messages %}
+
+      {% if message.sender != user %}
+        <div class="text-left">
+          <span class="mr-4"><img src="{{recipient.avatar}}" class="rounded-circle" width="40px"/></span>
+          <div class="alert alert-light d-inline-block" style="max-width:300px;"><p>{{message.message|raw}} </p></div>
+        </div>
+      {% endif %}
+
+      {% if message.sender == user %}
+        <div class="text-right">
+          <a href="{{ path('account_message_delete', {'messageId' : message.id, 'email' : message.recipient.email }) }}" class="text-danger"><i class="fas fa-trash"></i></a>
+          <a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" title="{{message.createdAt|date('d/m/Y')}}">
+            <div class="alert alert-secondary d-inline-block ml-4" style="max-width:300px;"><p>{{message.message|raw}} </p></div>
+          </a>
+          <span class="ml-4"><img src="{{user.avatar}}" class="rounded-circle" width="40px"/></span>
+        </div>
+      {% endif %}
+    {% endfor %}
+    {% if limit == null %}
+      {% set limit = limit + 20 %}
+    {% endif %}
+    <center>{% trans %}See more messages{% endtrans %}</center>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      {{form_start(form)}}
+        {{form_widget(form)}}
+        <button type="submit" class="btn btn-primary">{% trans %}Answer{% endtrans %}</button>
+      {{form_end(form)}}
+    </div>
+  </div>
+  <!-- EndActive Conversation -->
+  {% else %}
+    Créer une conversation
+  {% endif %}
+{% endblock %}

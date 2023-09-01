@@ -2,36 +2,50 @@
 
 {% block title %}{{ controller_name }}{% endblock %}
 
+{% block sideMenu %}
+    <aside class="col-2 border-end p-5">
+        <h2 class="my-5">Filtrer</h2>
+        <div class="col-10">{{ form(formSearch, {'action': path('product_index'), 'method': 'GET'}) }}</div>
+    </aside>
+{% endblock %}
+
 {% block body %}
-<div class="container-fluid">
-    <h1 class="h2 mb-5">Mon compte</h1>
-    <p>
-        Bienvenue <b>{{user.firstName}}</b> dans votre compte.<br/>
-        C'est dans cet espace que vous pouvez gérer vos informations personnelles et gérer vos commandes.
-    </p>
-    <hr class="my-5">
-    <ul>
-        <li><a href="{{ path('account_edit') }}">Modifier mes informations personnelles</a></li>
-        <li><a href="">Modifier mes adresses</a></li>
-        <li><a href="">Gérer mes commandes</a></li>    
-    </ul>
-
-    <hr class="my-5">
-
-    <a href="" class="btn btn-primary  float-end">Ajouter une adresse</a>
-    <h2 class="h3 mb-5">Mes adresses</h1>
-
-    {% if user.addresses is not empty %}
-        {# for %}
-        {% endfor #}
-
-    {% else %}
-        <p class="text-center">
-            Vous n'avez pas encore enregistré une adresse dans votre compte client.
-            Pour en ajouter une, <a href="">cliquez ici</a>.
+<div class="container-fluid px-0">
+    <div class="p-5">
+        <h1 class="h2 my-5">Mon compte</h1>
+        <p>
+            Bienvenue <b>{{user.firstName}}</b> dans votre compte.<br/>
+            C'est dans cet espace que vous pouvez gérer vos informations personnelles et gérer vos commandes.
         </p>
-    {% endif %}
+    </div>
+    <hr class="my-5">
+    <div class="px-5">
+        <ul>
+            <li><a href="{{ path('account_edit') }}">Modifier mes informations personnelles</a></li>
+            <li><a href="">Modifier mes adresses</a></li>
+            <li><a href="">Gérer mes commandes</a></li>    
+        </ul>
+    </div>
 
+    <hr class="my-5">
+    <div class="px-5">
+        <a href="" class="btn btn-primary  float-end">Ajouter une adresse</a>
+        <h2 class="h3 mb-5">Mes adresses</h1>
+
+        {% if user.addresses is not empty %}
+            {# for %}
+            {% endfor #}
+
+        {% else %}
+            <p class="text-center">
+                Vous n'avez pas encore enregistré une adresse dans votre compte client.
+                Pour en ajouter une, <a href="">cliquez ici</a>.
+            </p>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}
 
+{% block sideCart %}
+    {{ sessionCart.display() }}
+{% endblock %}

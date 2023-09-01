@@ -1,15 +1,30 @@
 # Title 
 
-Accueil : Accueil
 Inscription : Inscription
+Connexion : Connexion
 
-# Products
+# Menu
+
+Accueil : Accueil
+À propos : À propos
+Nos produits : Nos produits
+Tous les produits : Tous les produits
+Éditions limitées : Éditions limitées
+Nouveautés : Nouveautés
+
+# Words
 
 Fermer : Fermer
+Auteur : Auteur
 
 #
 # FORM
 #
+
+# Connection
+
+Connectez-vous : Connectez-vous
+Mot de passe : Mot de passe
 
 # Registration
 

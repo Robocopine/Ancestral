@@ -31,3 +31,9 @@ services:
     App\Service\CartService:
         arguments :
             $templatePath: 'app/partials/_sidecart.html.twig'
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    App\Service\LanguageService:
+        arguments :
+            $templatePath: 'app/partials/_language.html.twig'

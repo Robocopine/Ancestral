@@ -28,6 +28,23 @@
     padding: 0;
 }
 
+body{
+    position: relative;
+    min-height: 100vh;
+}
+
+#icons-bottom{
+    bottom: 20px;
+    right: 30px;
+    a{
+        width: 45px!important;
+        height: 45px!important;
+        text-align: center;
+    }
+}
+
+
 footer{
     width: 100%;
+    position: absolute;
 }

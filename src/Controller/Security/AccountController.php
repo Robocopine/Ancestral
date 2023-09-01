@@ -2,10 +2,14 @@
 
 namespace App\Controller\Security;
 
+use App\Classe\Search;
 use App\Entity\Address;
+use App\Form\App\SearchType;
+use App\Service\CartService;
 use App\Security\EmailVerifier;
 use App\Form\Security\AccountType;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\ConversationRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,17 +28,29 @@ class AccountController extends AbstractController
     }
     
     #[Route('/', name: 'show')]
-    public function show(): Response
+    public function show(Request $request, CartService $sessionCart): Response
     {
+        // Filter by name and category
+        $search = new Search();
+        $formSearch = $this->createForm(SearchType::class, $search);
+        $formSearch->handleRequest($request);
+
         return $this->render('security/account/index.html.twig', [
             'user' => $this->getUser(),
             'controller_name' => 'Mon compte',
+            'formSearch' => $formSearch,
+            'sessionCart' => $sessionCart,
         ]);
     }
 
     #[Route('/modifier-infos', name: 'edit')]
-    public function edit(Request $request, UserPasswordHasherInterface $encoder, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, UserPasswordHasherInterface $encoder, EntityManagerInterface $entityManager, CartService $sessionCart): Response
     {
+        // Filter by name and category
+        $search = new Search();
+        $formSearch = $this->createForm(SearchType::class, $search);
+        $formSearch->handleRequest($request);
+
         $user = $this->getUser();
         $oldEmail = $this->getUser()->getEmail();
         $address = new Address();
@@ -85,6 +101,67 @@ class AccountController extends AbstractController
         return $this->render('security/account/edit.html.twig', [
             'form' => $form,
             'controller_name' => 'Modification de mes informations personnelles',
+            'formSearch' => $formSearch,
+            'sessionCart' => $sessionCart,
         ]);
+    }
+
+    #[Route('/conversation/{ticket?}', name: 'message')]
+    public function messageShow(MessageService $messages, UserRepository $users, UserService $user, ObjectManager $manager, Request $request, $ticket)
+    {
+        $conversation = findOneBy([
+            'user' => $user,
+            'ticket' => $ticket,
+        ]);
+        $message = new Message();
+        $form = $this->createForm(MessageType::class, $message);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            // Get connected user and set it as visitor
+            $user = $this->getUser();
+            $message->setSender($user);
+            $message->setConversation($conversation);
+            $manager->persist($message);
+            $manager->flush();
+
+            return $this->redirectToRoute('account_message', array(
+                'ticket' => $ticket
+            ));
+        }
+        
+        
+        // Translations of controller
+        return $this->render('security/account/message.html.twig', [
+            'controller_name' => '',
+            'conversation' => $conversation,
+            'form' => $form
+        ]);
+    }
+
+    #[Route('/conversation/add/', name: 'message')]
+    public function createConversation(MessageService $messages, ConversationRepository $conversationRepository){
+
+        $user = $this->getUser();
+        $conversation = findOneBy([
+            'user' => $user,
+            'isActive' => true,
+        ]);
+        if($conversation){
+            return $this->redirectToRoute('account_message', array(
+                'ticket' => $conversation->getTicket(),
+            ));
+        }else{
+            $conversation = new Conversation();
+            $conversation->setClient($user);
+            $conversation->setResolved(false);
+            $conversation->setActive(true);
+            $conversationRepository->save($conversation, true);
+
+            return $this->redirectToRoute('account_message', array(
+                'ticket' => $conversation->getTicket(),
+            ));
+        }
+        
+        
     }
 }

@@ -8,7 +8,8 @@
 
 
 // start the Stimulus application
-import './../bootstrap';
+
+import '../bootstrap';
 
 require('bootstrap');
 
@@ -21,3 +22,12 @@ global.$ = global.jQuery = $;
 
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.scss';
+
+import * as bootstrap from 'bootstrap';
+
+const myModal = new bootstrap.Modal('#exampleModalCenter', {
+    keyboard: false,
+    backdrop: 'static',
+});
+
+//myModal.show();

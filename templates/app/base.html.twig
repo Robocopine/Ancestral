@@ -13,25 +13,24 @@
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
-        {{ encore_entry_script_tags('app') }}
+        
     </head>
-    <body>
+    <body class="container-fluid position-relative p-0 m-0">
         {{ include("app/partials/_navtop.html.twig") }}
         {% if app.user is null %}
             {{ include("app/partials/_loginForm.html.twig") }}
         {% endif %}
         {{ include("app/partials/_header.html.twig") }}
         <div class="container-fluid">
-            <div class="row">
+            <div class="row justify-content-md-center">
                 {% block sideMenu %}{{ include("app/partials/_sidemenu.html.twig") }}{% endblock %}
-                <main {% block mainClass %}class="col-lg-8 mt-5 pb-5"{% endblock %}>{% block body %}{% endblock %}</main>
+                <main {% block mainClass %}class="col-lg-8 px-0 pb-5"{% endblock %}>{% block body %}{% endblock %}</main>
                 {% block sideCart %}{% endblock %}
             </div>
         </div>
-        <footer class="py-5 mt-5 bg-dark bottom-0 {% block positionFooter %} position-relative {% endblock %}">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
-        </footer>
-
-        {% block javascripts %}{% endblock %}
+        {{ include("app/partials/_footer.html.twig") }}
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
     </body>
 </html>

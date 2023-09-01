@@ -1,7 +1,5 @@
 {% extends 'security/base.html.twig' %}
 
-{% block title %}Hello PageController!{% endblock %}
-
 {% block body %}
 
 <form method="post">
@@ -16,18 +14,20 @@
         </script>
     {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <h2 class="h3 mb-3 font-weight-normal">{% trans %}Connectez-vous{% endtrans %}</h2>
     <label for="inputEmail">Email</label>
     <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label for="inputPassword">Password</label>
+    <label for="inputPassword">{% trans %}Mot de passe{% endtrans %}</label>
     <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
     <input type="hidden" name="_csrf_token"
         value="{{ csrf_token('authenticate') }}"
     >
-    <button class="btn btn-lg btn-primary" type="submit" onclick="closeIframe();">
-        Sign in
-    </button>
+    <div class="text-center">
+        <button class="btn btn-lg btn-primary mt-3" type="submit" onclick="closeIframe();">
+            {% trans %}Connexion{% endtrans %}
+        </button>
+    </div>
 </form>
 
 

@@ -28,8 +28,8 @@ class ProductController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    #[Route('s/{page<\d+>?1}', name: '_index')]
-    public function index(Request $request, PaginationService $pagination, CartService $sessionCart, CommentRepository $commentRepository, UserRepository $users, $page): Response
+    #[Route('s/{page<\d+>?1}/{search?null}', name: '_index')]
+    public function index(Request $request, PaginationService $pagination, CartService $sessionCart, CommentRepository $commentRepository, UserRepository $users, $page, $search): Response
     {
         $products = $this->entityManager->getRepository(Product::class)->findAll();
 
@@ -74,6 +74,7 @@ class ProductController extends AbstractController
             'formComment' => $formComment,
             'sessionCart' => $sessionCart,
             'users' => $users->findAll(),
+            'search' => $search,
         ]);
     }
 }
