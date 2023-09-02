@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Carrier;
-use App\Form\App\CarrierType;
+use App\Form\Admin\CarrierType;
 use App\Service\PaginationService;
 use App\Repository\CarrierRepository;
 use Symfony\Component\HttpFoundation\Request;

@@ -1,5 +1,5 @@
 <!-- Vertically centered scrollable modal -->
-<div id="productShow" tabindex="-1"  role="dialog" class="modal fade "  aria-labelledby="productShowLabel" >
+<div id="productShow{{product.id}}" tabindex="-1"  role="dialog" class="modal fade "  aria-labelledby="productShowLabel{{product.id}}" >
     <div class="modal-dialog modal-xl"  role="document">
     <div class="modal-content container-fluid">
       <div class="modal-header">
@@ -51,11 +51,11 @@
           {% endif %}
           <div class="mt-5">
             <h5>Ajouter un nouveau commentaire</h5>
-            {{ form_start(formComment) }}
+            {# form_start(formComment) }}
               {% if app.user %}
                 <div class="py-3">
                   {{ form_label(formComment.author, 'Auteur') }}
-                  {{ form_widget(formComment.author, {'value': app.user.fullName}) }}
+                  {{ form_widget(formComment.author, {'value': app.user.fullName}) }} 
                 </div>
               {% endif %}
               {{ form_widget(formComment.product, {'value': product, 'attr':{'class':'d-none'}}) }}
@@ -63,7 +63,7 @@
               <button type="submit" class="btn btn-primary">
                 Commenter
               </button>
-            {{ form_end(formComment) }}
+            {{ form_end(formComment) #}
           </div> 
         </div>
       </div>

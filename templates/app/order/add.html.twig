@@ -33,6 +33,7 @@
             <h3 class="text-center">Mon panier <i class="fa-solid fa-basket-shopping ms-1"></i></h3>
             <ul class="py-3 container-fluid">
                 {% set total = 0 %}
+                {% set totals = 0 %}
                 {% for products in cartFull %}
                     {% set product = products.product %}
                     <div class="row">
@@ -43,18 +44,19 @@
                         <div class="col-2 my-auto">{{ (product.price * products.quantity)|number_format(2, ',', '.') }} €</div>
                     </div>
                     {% set total =+ (product.price * products.quantity) %}
+                    {% set totals = totals + total %}
                 {% endfor %}
             </ul>
             <hr>
-            <p><b>Sous-Total : </b> {{ (total)|number_format(2, ',', '.') }} €</p>
+            <p><b>Sous-Total : </b> {{ (totals)|number_format(2, ',', '.') }} €</p>
             <p><b>Livraison : </b> {{ (carrier.price)|number_format(2, ',', '.') }} €</p>
             <hr>
-            <p><b>Total : </b> {{ (total + carrier.price)|number_format(2, ',', '.') }} €</p>
+            <p><b>Total : </b> {{ (totals + carrier.price)|number_format(2, ',', '.') }} €</p>
         </div>
         <hr>
 
-        <div class="col text-center py-5">
-            <a id="checkout-button" class="btn btn-success btn-block">Payer la commande ({{ (total + carrier.price)|number_format(2, ',', '.') }} €)</a>
+        <div class="col text-center pt-3">
+            <a id="checkout-button" class="btn btn-success btn-block">Payer la commande ({{ (totals + carrier.price)|number_format(2, ',', '.') }} €)</a>
         </div>
 
     </div>
@@ -90,3 +92,5 @@
         });
     </script>
 {% endblock %}
+
+{% set positionFooter = "position-relative" %}

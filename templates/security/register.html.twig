@@ -20,7 +20,7 @@
 
 {% endblock %}
 
-{% block positionFooter %} position-absolute {% endblock %}
+{% set positionFooter = "position-relative" %}
 
 {% block sideCart %}
     {{ sessionCart.display() }}

@@ -8,5 +8,5 @@
             <li>{{ products.quantity }}x <b class="ms-1">{{ product.subtitle }}</b></li>
         {% endfor %}
     </ul>
-    <p class="text-center"><a class="btn btn-primary btn-block" href="">Accéder au panier</a></p>
+    <p class="text-center"><a class="btn btn-primary btn-block" href="{{ path('cart_index') }}">Accéder au panier</a></p>
 </aside>

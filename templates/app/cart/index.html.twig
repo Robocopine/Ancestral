@@ -26,6 +26,7 @@
                 </thead>
                 <tbody>
                     {% set totalPrice = null %}
+                    {% set totalPrices = null %}
                     {% set totalProducts = null %}
                     {% for products in cart %}
                         {% set product = products.product %}
@@ -57,11 +58,13 @@
                         </tr>
                         {% set totalPrice =+ (product.price * products.quantity) %}
                         {% set totalProducts =+ products.quantity %}
+
+                        {% set totalPrices = totalPrices + totalPrice  %}
                     {% endfor %}
                     <tr>
                         <td colspan="6" class="text-end">
                             <p><b>Nombre de produit</b> : {{ totalProducts }}</p>
-                            <p><b>Total de mon panier</b> : {{ ( totalPrice)|number_format(2, ',', '.') }} €</p>
+                            <p><b>Total de mon panier</b> : {{ ( totalPrices)|number_format(2, ',', '.') }} €</p>
                         </td>
                     </tr>
                 </tbody>

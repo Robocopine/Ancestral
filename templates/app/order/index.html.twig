@@ -43,13 +43,13 @@
                                 <img src="{{ product.illustration }}" alt="{{ product.name }}" width="50px" class="rounded img-fluid me-2" />
                             </div>
                             <div class="col-8 my-auto">{{ products.quantity }}x <b class="ms-1">{{ product.subtitle }}</b></div>
-                            <div class="col-2 my-auto">{{ ((product.price * products.quantity) / 100)|number_format(2, ',', '.') }} €</div>
+                            <div class="col-2 my-auto">{{ (product.price * products.quantity)|number_format(2, ',', '.') }} €</div>
                         </div>
                     {% endfor %}
                 </ul>
             </div>
             <hr>
-            <div class="col text-center py-5">{{ form_row(form.submit) }} </div>
+            <div class="col text-center pt-3">{{ form_row(form.submit) }} </div>
         </div>
     {% endset %}
     {{ formHtml|replace({'[br]' : '<br/>'})|raw }}
@@ -90,3 +90,5 @@
 {% endblock %}
 
 {% block sideCart %}{% endblock %}
+
+{% set positionFooter = "position-relative" %}

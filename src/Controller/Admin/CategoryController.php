@@ -70,6 +70,7 @@ class CategoryController extends AbstractController
         return $this->renderForm('admin/category/edit.html.twig', [
             'category' => $category,
             'form' => $form,
+            'controller_name' => 'Modifier '.$category->getName(),
         ]);
     }
 
