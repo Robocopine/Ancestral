@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/produit', name: 'product')]
+#[Route('/produit', name: 'product_')]
 class ProductController extends AbstractController
 {
     private $entityManager;
@@ -28,8 +28,8 @@ class ProductController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    #[Route('s/{page<\d+>?1}/{search?null}', name: '_index')]
-    public function index(Request $request, PaginationService $pagination, CartService $sessionCart, CommentRepository $commentRepository, UserRepository $users, $page, $search): Response
+    #[Route('s/{page<\d+>?1}/{search?null}', name: 'index')]
+    public function index(Request $request, PaginationService $pagination, CartService $sessionCart, $page, $search): Response
     {
         $products = $this->entityManager->getRepository(Product::class)->findAll();
 
@@ -55,6 +55,18 @@ class ProductController extends AbstractController
             ;
         }
 
+        return $this->render('app/product/index.html.twig', [
+            'controller_name' => 'Nos produits',
+            'pagination' => $pagination,
+            'formSearch' => $formSearch,
+            'sessionCart' => $sessionCart,
+            'search' => $search,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'show')]
+    public function show(Product $product, Request $request, CommentRepository $commentRepository, UserRepository $users): Response
+    {
         // Generate a form to comment
         $comment = new Comment();
 
@@ -64,17 +76,13 @@ class ProductController extends AbstractController
         if($formComment->isSubmitted() && $formComment->isValid()){
             $commentRepository->save($comment, true);
 
-            return $this->redirectToRoute('product_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('product_show', ['id'=> $product], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('app/product/index.html.twig', [
-            'controller_name' => 'Nos produits',
-            'pagination' => $pagination,
-            'formSearch' => $formSearch,
+        return $this->render('app/product/show.html.twig', [
+            'product' => $product,
             'formComment' => $formComment,
-            'sessionCart' => $sessionCart,
             'users' => $users->findAll(),
-            'search' => $search,
         ]);
     }
 }

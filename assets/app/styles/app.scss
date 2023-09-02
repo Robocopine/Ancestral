@@ -19,6 +19,29 @@
     }
 }
 
+.productModal{
+    .modal-dialog{
+        height: 900px;
+        .modal-content{
+
+            height: 900px;
+
+            .modal-body {
+                height: 100%;
+                overflow: hidden;
+                iframe{
+                    height: 100%;
+                }
+            }
+        }
+        
+    }
+}
+
+.close{
+    border: none;
+}
+
 .text-justify{
     text-align: justify;
 }

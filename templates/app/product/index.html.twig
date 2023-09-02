@@ -39,7 +39,7 @@
             </div>
         </div>
     </div>
-    {% include("app/product/partials/_show.html.twig")  with {'product': product} %}
+    {% include("app/product/partials/_modal.html.twig")  with {'product': product} %}
     {% else %}
         <span class="float-sm-start p-5 ms-5">Pas de produits dans cette catégorie</span>
     {% endfor %}
