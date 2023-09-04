@@ -53,7 +53,6 @@
                 {{ form_widget(formComment.author, {'value': app.user.fullName}) }} 
             </div>
             {% endif %}
-            {{ form_widget(formComment.product, {'value': product, 'attr':{'class':'d-none'}}) }}
             {{ form_widget(formComment) }}
             <button type="submit" class="btn btn-primary">
             Commenter

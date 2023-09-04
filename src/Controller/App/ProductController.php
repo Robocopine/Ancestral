@@ -74,9 +74,10 @@ class ProductController extends AbstractController
         $formComment->handleRequest($request);
 
         if($formComment->isSubmitted() && $formComment->isValid()){
+            $comment->setProduct($product);
             $commentRepository->save($comment, true);
 
-            return $this->redirectToRoute('product_show', ['id'=> $product], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('product_show', ['id'=> $product->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('app/product/show.html.twig', [

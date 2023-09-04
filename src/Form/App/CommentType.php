@@ -27,7 +27,6 @@ class CommentType extends AbstractType
                 ]
             ])
             ->add('content')
-            ->add('product')
         ;
     }
 
