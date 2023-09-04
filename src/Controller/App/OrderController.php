@@ -79,6 +79,8 @@ class OrderController extends AbstractController
             $delivery_content .= '<br/>'.$delivery->getCountry();
             
             $order = new Order();
+            $reference = $date->format('dmY').'-'.uniqid();
+            $order->setReference($reference);
             $order->setUser($this->getUser());
             $order->setCreatedAt($date);
             $order->setCarrierName($carriers->getName());
@@ -87,7 +89,6 @@ class OrderController extends AbstractController
             $order->setIsPaid(0);
 
             $this->entityManager->persist($order);
-
 
             // Save products cart in OrderDetails Entity
             foreach($cart->getFull() as $product){
@@ -100,19 +101,27 @@ class OrderController extends AbstractController
                 $this->entityManager->persist($orderDetails);
             }
 
-            // $this->entityManager->flush();
+            $this->entityManager->flush();
 
             return $this->render('app/order/add.html.twig', [
                 'controller_name' => 'OrderController',
                 'cartFull' => $cart->getFull(),
                 'carrier' => $carriers,
                 'delivery' => $delivery_content,
+                'reference' => $order->getReference(),
             ]);
 
             return $this->redirectToroute('cart_index');
+        } 
+    }
 
-        }
-
-        
+    #[Route('/merci/{stripeSessionId}', name: 'validate')]
+    public function validate($stripeSessionId)
+    {
+        $order = $this->entityManager->getRepository(Order::class)->findOneByStripeSessionId($stripeSessionId);
+        dd($order);
+        return $this->render('app/order/success.html.twig', [
+            'controller_name' => 'Merci pour votre commande',
+        ]);
     }
 }
