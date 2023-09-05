@@ -7,6 +7,8 @@ use App\Classe\Cart;
 use App\Entity\Order;
 use DateTimeImmutable;
 use App\Entity\Address;
+use App\Entity\Carrier;
+use App\Entity\Product;
 use Stripe\StripeClient;
 use App\Form\App\OrderType;
 use App\Entity\OrderDetails;
@@ -116,12 +118,55 @@ class OrderController extends AbstractController
     }
 
     #[Route('/merci/{stripeSessionId}', name: 'validate')]
-    public function validate($stripeSessionId)
+    public function validate($stripeSessionId, Cart $cart)
     {
         $order = $this->entityManager->getRepository(Order::class)->findOneByStripeSessionId($stripeSessionId);
-        dd($order);
+        if(!$order || ($order->getUser() != $this->getUser())) {
+            return $this->redirectToRoute('home');
+        }
+
+        if(!$order->isIsPaid()) {
+            $cart->remove();
+            $order->setIsPaid(1);
+            $this->entityManager->flush();
+            // send success mail
+        }
+
+        $carrier = $this->entityManager->getRepository(Carrier::class)->findOneByName($order->getCarrierName());
+        foreach($order->getOrderDetails()->getValues() as $product){
+            $product_object[] = ['productDetails' => $this->entityManager->getRepository(Product::class)->findOneByName($product->getProduct()) , 'quantity' => $product->getQuantity()];
+        }
         return $this->render('app/order/success.html.twig', [
-            'controller_name' => 'Merci pour votre commande',
+            'controller_name' => 'Confirmation de commande',
+            'order' => $order,
+            'cartFull' => $product_object,
+            'carrier' => $carrier,
+            'delivery' => $order->getDelivery(),
+            'reference' => $order->getReference(),
+        ]);
+    }
+
+    #[Route('/erreur/{stripeSessionId}', name: 'cancel')]
+    public function cancel($stripeSessionId)
+    {
+        $order = $this->entityManager->getRepository(Order::class)->findOneByStripeSessionId($stripeSessionId);
+        
+        if(!$order || ($order->getUser() != $this->getUser())) {
+            return $this->redirectToRoute('home');
+        }
+
+        $carrier = $this->entityManager->getRepository(Carrier::class)->findOneByName($order->getCarrierName());
+        foreach($order->getOrderDetails()->getValues() as $product){
+            $product_object[] = ['productDetails' => $this->entityManager->getRepository(Product::class)->findOneByName($product->getProduct()) , 'quantity' => $product->getQuantity()];
+        }
+
+        return $this->render('app/order/cancel.html.twig', [
+            'controller_name' => 'Confirmation de commande',
+            'order' => $order,
+            'cartFull' => $product_object,
+            'carrier' => $carrier,
+            'delivery' => $order->getDelivery(),
+            'reference' => $order->getReference(),
         ]);
     }
 }

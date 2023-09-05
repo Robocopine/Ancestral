@@ -64,6 +64,7 @@ class StripeController extends AbstractController
         Stripe::setApiKey($_ENV['STRIPE_SECRETKEY']);
 
         $checkout_session = Session::create([
+            'customer_email' => $this->getUser()->getEmail(),
             'line_items' => [
                 $products_for_stripe
             ],
@@ -73,6 +74,7 @@ class StripeController extends AbstractController
         ]);
 
         $order->setStripeSessionId($checkout_session->id);
+        $this->entityManager->flush();
 
         return new JsonResponse(['id' => $checkout_session->id]);
     }

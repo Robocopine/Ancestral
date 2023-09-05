@@ -1,4 +1,4 @@
-{# templates/app/order/index.html.twig -- show order informations #}
+{# templates/app/order/success.html.twig -- show order informations #}
 
 {% extends 'app/base.html.twig' %}
 
@@ -8,8 +8,11 @@
 
 {% block body %}
     <div class="p-5">
-        <h2>Résumé de la commande</h2>
-        <p>Vérifiez vos informations avant de payer votre commande</p>
+        <h2>Confirmation de la commande</h2><br/>
+        <p class="alert alert-success d-inline-block">
+            Nous vous remercions pour votre commande n°<strong>{{ reference }}</strong>. <br/>
+            Une confirmation vient de vous être envoyée par email à l'adresse <strong>{{ order.user.email }}</strong>. <br/>
+        </p>
     </div>
     <hr class="my-0">
 
@@ -35,7 +38,7 @@
                 {% set total = 0 %}
                 {% set totals = 0 %}
                 {% for products in cartFull %}
-                    {% set product = products.product %}
+                    {% set product = products.productDetails %}
                     <div class="row">
                         <div class="col-2 my-auto ps-5">
                             <img src="{{ product.illustration }}" alt="{{ product.name }}" width="50px" class="rounded img-fluid me-2" />
@@ -54,47 +57,9 @@
             <p><b>Total : </b> {{ (totals + carrier.price)|number_format(2, ',', '.') }} €</p>
         </div>
         <hr>
-
-        <div class="col text-center pt-3">
-            <a id="checkout-button" class="btn btn-success btn-block">Payer la commande ({{ (totals + carrier.price)|number_format(2, ',', '.') }} €)</a>
-        </div>
-
     </div>
+
 
 {% endblock %}
 
 {% block sideCart %}{% endblock %}
-
-{% block javascripts %}
-    {{ parent()}}
-    <script src="https://js.stripe.com/v3/"></script>
-    <script type="text/javascript">
-        var stripe = Stripe("pk_test_51NYZPwDha53XRXf5GSX3pJAcfgBbPM4isWmA3PnX3hrlfpyDFTCF8bAO4zJQGbB9xTyGGoPIqUV271zOu4rZxO8E00M6lxBXQM");
-        var checkoutButton = document.getElementById("checkout-button");
-        checkoutButton.addEventListener("click", function () {
-            fetch("/commande/create-session/{{ reference }}", {
-                method: "POST",
-            })
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (session) {
-                if(session.error == 'order') {
-                    window.location.replace('{{ path('order_index') }}');
-                } else {
-                    return stripe.redirectToCheckout({ sessionId: session.id });
-                }
-            })
-            .then(function (result) {
-                if (result.error) {
-                    alert(result.error.message);
-                }
-            })
-            .catch(function (error) {
-                console.error("Error:", error);
-            });
-        });
-    </script>
-{% endblock %}
-
-{% set positionFooter = "position-relative" %}
