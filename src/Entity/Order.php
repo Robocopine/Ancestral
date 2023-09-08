@@ -180,4 +180,25 @@ class Order
 
         return $this;
     }
+
+    public function getTotalProductsPrice(): ?float
+    {
+        $total = null;
+        foreach($this->getOrderDetails()->getValues() as $product){
+            $total = $total + ($product->getPrice() * $product->getQuantity());
+        }
+        
+        return $total;
+    }
+
+    public function getTotalOrderPrice(): ?float
+    {
+        $total = null;
+        foreach($this->getOrderDetails()->getValues() as $product){
+            $total = $total + ($product->getPrice() * $product->getQuantity());
+        }
+        $total = $total + $this->getCarrierPrice();
+        return $total;
+    }
+
 }

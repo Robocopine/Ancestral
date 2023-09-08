@@ -1,0 +1,57 @@
+{# templates/admin/order/index.html.twig -- The index of all orders #}
+
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ controller_name }}{% endblock %}
+
+{% block body %}
+
+<a class="btn btn-primary float-end mt-5" href="{{ path('admin_order_new') }}">+</a>
+
+<h1 class="my-5">Liste des commandes</h1>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Date</th>
+            <th>Client</th>
+            <th>Prix total</th>
+            <th>Payée</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for order in pagination.data %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.createdAt|date("m/d/Y") }}</td>
+            <td>{{ order.user }}</td>
+            <td>{{ order.totalOrderPrice|number_format(2, ',', '.') }} € </td>
+            <td class="text-center">{% if order.isPaid == 1 %}<i class="fa-solid fa-check text-success"></i>{% else %}<i class="fa-solid fa-xmark text-danger"></i>{% endif %}</td>
+            <td>
+                <a href="{{ path('admin_order_show', {'id': order.id}) }}" class="text-dark pr-2"><i class="fas fa-eye"></i></a>
+                <a href="{{ path('admin_order_edit', {'id': order.id}) }}"><i class="fas fa-edit"></i></a>
+                {% set textDelete, linkDelete, paramsDelete, modalId = "Êtes vous-sûre de supprimer la commande <b>" ~ order.reference ~ "</b>?<br> Vous perdrez toutes les informations.", "admin_order_delete", {'id': order.id}, order.id  %}
+                {{ include("/admin/partials/_delete.html.twig") }}
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#deleteModal{{order.id}}">
+                    <span><a class="text-danger"><i class="fas fa-trash"></i></a></span>
+                </button>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="3">Aucune commande enregistrée</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="3" class="pt-4 pb-0">
+                {{ pagination.display() }}
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+{% endblock %}

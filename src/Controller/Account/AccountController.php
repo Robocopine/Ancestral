@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Security;
+namespace App\Controller\Account;
 
 use App\Classe\Search;
 use App\Entity\Address;
@@ -35,7 +35,7 @@ class AccountController extends AbstractController
         $formSearch = $this->createForm(SearchType::class, $search);
         $formSearch->handleRequest($request);
 
-        return $this->render('security/account/index.html.twig', [
+        return $this->render('account/index.html.twig', [
             'user' => $this->getUser(),
             'controller_name' => 'Mon compte',
             'formSearch' => $formSearch,
@@ -98,7 +98,7 @@ class AccountController extends AbstractController
             return $this->redirectToRoute('account_show');
             
         }
-        return $this->render('security/account/edit.html.twig', [
+        return $this->render('account/edit.html.twig', [
             'form' => $form,
             'controller_name' => 'Modification de mes informations personnelles',
             'formSearch' => $formSearch,
@@ -106,62 +106,5 @@ class AccountController extends AbstractController
         ]);
     }
 
-    #[Route('/conversation/{ticket?}', name: 'message')]
-    public function messageShow(MessageService $messages, UserRepository $users, UserService $user, ObjectManager $manager, Request $request, $ticket)
-    {
-        $conversation = findOneBy([
-            'user' => $user,
-            'ticket' => $ticket,
-        ]);
-        $message = new Message();
-        $form = $this->createForm(MessageType::class, $message);
-        $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
-            // Get connected user and set it as visitor
-            $user = $this->getUser();
-            $message->setSender($user);
-            $message->setConversation($conversation);
-            $manager->persist($message);
-            $manager->flush();
-
-            return $this->redirectToRoute('account_message', array(
-                'ticket' => $ticket
-            ));
-        }
-        
-        
-        // Translations of controller
-        return $this->render('security/account/message.html.twig', [
-            'controller_name' => '',
-            'conversation' => $conversation,
-            'form' => $form
-        ]);
-    }
-
-    #[Route('/conversation/add/', name: 'message')]
-    public function createConversation(MessageService $messages, ConversationRepository $conversationRepository){
-
-        $user = $this->getUser();
-        $conversation = findOneBy([
-            'user' => $user,
-            'isActive' => true,
-        ]);
-        if($conversation){
-            return $this->redirectToRoute('account_message', array(
-                'ticket' => $conversation->getTicket(),
-            ));
-        }else{
-            $conversation = new Conversation();
-            $conversation->setClient($user);
-            $conversation->setResolved(false);
-            $conversation->setActive(true);
-            $conversationRepository->save($conversation, true);
-
-            return $this->redirectToRoute('account_message', array(
-                'ticket' => $conversation->getTicket(),
-            ));
-        }
-        
-        
-    }
+    
 }

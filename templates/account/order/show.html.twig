@@ -1,0 +1,71 @@
+{% extends 'app/base.html.twig' %}
+
+{% block title %}{{ controller_name }}{% endblock %}
+
+{% block sideMenu %}
+    <aside class="col-2 border-end p-5">
+        <h2 class="my-5">Filtrer</h2>
+        <div class="col-10">{{ form(formSearch, {'action': path('product_index'), 'method': 'GET'}) }}</div>
+    </aside>
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid px-0">
+        <div class="p-5">
+            <h1 class="h2 my-5">Ma commande <span class="badge bg-secondary">{{ order.reference }}</span></h1>
+            <div class="card mb-5">
+                <div class="card-body">
+                    <table class="table">
+                        <tr>
+                            <th>Référence commande</th>
+                            <td><span class="badge bg-secondary">{{ order.reference }}</span></td>
+                        </tr>
+                        <tr>
+                            <th>Date de création</th>
+                            <td>{{ order.createdAt|date('d-m-Y à H:i:s') }}</td>
+                        </tr>
+                        <tr>
+                            <th>Transporteur</th>
+                            <td>{{ order.carrierName }} ({{ order.carrierPrice |number_format(2, ',', '.') }} €)</td>
+                        </tr>
+                        <tr>
+                            <th>Informations de livraisons</th>
+                            <td>{{ order.delivery |raw}}</td>
+                        </tr>
+                        <tr>
+                            <th>État du paiement</th>
+                            <td>{{ order.isPaid ? "<i class='fa-solid fa-check text-success'></i> Payée" : "<i class='fa-solid fa-xmark text-danger'></i> Impayée" }}</td>
+                        </tr>
+                    </table>
+                    {% set total = 0 %}
+                    {% set totals = 0 %}
+                    {% for products in cartFull %}
+                        {% set product = products.productDetails %}
+                        <p class="badge bg-primary">Vos produits</p>
+                        <table class="table">
+                            <tr>
+                                <td>{{ products.quantity }}x <strong>{{ product.name }}</strong></td>
+                                <td><img src="{{ product.illustration }}" alt="{{ product.name }}" width="50px" class="rounded img-fluid me-2" /></td>
+                                <td>({{ product.price|number_format(2, ',', '.') }} € / Unité)</span></td>
+                                <td>{{ (product.price * products.quantity)|number_format(2, ',', '.') }} € (Total)</span></td>
+                            </tr>
+                        </table>
+                    {% endfor %}
+                    <div class="float-end">
+                        <span><strong>Sous-total</strong> : {{ order.totalProductsPrice|number_format(2, ',', '.') }} €</span><br>
+                        <span><strong>Livraison</strong> : {{ order.carrierPrice|number_format(2, ',', '.') }} €</span><br>
+                        <strong class="p">Total : <mark>{{ order.totalOrderPrice|number_format(2, ',', '.') }} €</mark></strong>
+                    </div>
+                </div>
+            </div>
+            <p>
+                <a href="{{ path('account_order_index') }}" class="btn btn-secondary">Mes commandes</a>  &nbsp;
+                <a href="{{ path('account_show') }}" class="btn btn-primary">Mon compte</a>
+            </p>
+        </div>
+    </div>
+{% endblock %}
+
+{% block sideCart %}
+    {{ sessionCart.display() }}
+{% endblock %}

@@ -1,0 +1,14 @@
+{# templates/admin/order/edit.html.twig -- Edit a category  #}
+
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ controller_name }}{% endblock %}
+
+{% block body %}
+    <h1 class="h2 my-5">Modifier commande n°{{ order.id }}</h1>
+
+    {{ include('admin/partials/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+    <a href="{{ path('admin_order_index') }}" class="btn btn-secondary d-inline-block button-back">Retour</a>
+
+{% endblock %}

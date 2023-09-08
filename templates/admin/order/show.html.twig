@@ -1,0 +1,45 @@
+{# templates/admin/order/show.html.twig -- Show a order #}
+
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ controller_name }}{% endblock %}
+
+{% block body %}
+    <h1 class="my-5">Commande</h1>
+    <div class="card mb-5">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Référence commande</th>
+                    <td>{{ order.reference }}</td>
+                </tr>
+                <tr>
+                    <th>Date de création</th>
+                    <td>{{ order.createdAt|date('d-m-Y H:i:s') }}</td>
+                </tr>
+                <tr>
+                    <th>Transporteur</th>
+                    <td>{{ order.carrierName }} ({{ order.carrierPrice |number_format(2, ',', '.') }} €)</td>
+                </tr>
+                <tr>
+                    <th>Informations de livraisons</th>
+                    <td>{{ order.delivery |raw}}</td>
+                </tr>
+                <tr>
+                    <th>État du paiement</th>
+                    <td>{{ order.isPaid ? "<i class='fa-solid fa-check text-success'></i> Payée" : "<i class='fa-solid fa-xmark text-danger'></i> Impayée" }}</td>
+                </tr>
+                <tr>
+                    <th>Référence Stripe</th>
+                    <td>{{ order.stripeSessionId ? order.stripeSessionId : '' }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <a href="{{ path('admin_order_index') }}" class="btn btn-secondary">Retour</a>
+
+    <a href="{{ path('admin_order_edit', {'id': order.id}) }}" class="btn btn-primary">Modifier</a>
+
+
+{% endblock %}
