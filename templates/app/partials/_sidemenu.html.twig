@@ -1,2 +1,5 @@
-{# templates/app/partials/_sidemenu.html.twig -- Side menu of app template  #}
-
+{# templates/app/partials/_sidemenu.html.twig -- Side menu with filter to search a product  #}
+<aside class="col-2 border-end p-5 d-lg-block d-none">
+    <h2 class="my-5">{% trans %}Filtre{% endtrans %}</h2>
+    <div class="col-10">{{ form(formSearch, {'action': path('product_index'), 'method': 'GET'}) }}</div>
+</aside>

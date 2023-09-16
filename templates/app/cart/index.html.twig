@@ -40,11 +40,11 @@
                                 <small>{{ product.subtitle }}</small>
                             </td>
                             <td>
-                                <a class="text-dark btn btn-light fw-bold fs-3 mb-2" href="{{ path('cart_decrease', {'id' : product.id}) }}">
+                                <a class="text-dark btn btn-light fw-bold fs-3 mb-2" href="{{ path('cart_decrease', {'id' : product.id, 'route': app.request.get('_route') }) }}">
                                     -
                                 </a>
                                 <span>{{ products.quantity }}</span>
-                                <a class="text-dark btn btn-light fw-bold fs-4 mb-2" href="{{ path('cart_add', {'id' : product.id}) }}">
+                                <a class="text-dark btn btn-light fw-bold fs-4 mb-2" href="{{ path('cart_add', { 'id': product.id, 'route': app.request.get('_route') }) }}">
                                     +
                                 </a>
                             </td>
@@ -76,3 +76,6 @@
         {% endif %}
     </div>
 {% endblock %}
+
+{% block sideCart %}{% endblock %}
+{% block sideMenu %}{% endblock %}

@@ -46,6 +46,12 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column]
+    private ?bool $isLimited = null;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -187,6 +193,30 @@ class Product
         return $this;
     }
 
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function isIsLimited(): ?bool
+    {
+        return $this->isLimited;
+    }
+
+    public function setIsLimited(bool $isLimited): self
+    {
+        $this->isLimited = $isLimited;
+
+        return $this;
+    }
+
     public function getAvgRatings() {
         //sum of rating
         $sum = array_reduce($this->comments->toArray(), function($total, $comment) {
@@ -200,4 +230,5 @@ class Product
     public function __toString(){
         return $this->getSlug();
     }
+    
 }

@@ -23,9 +23,13 @@
         {{ include("app/partials/_header.html.twig") }}
         <div class="container-fluid">
             <div class="row justify-content-md-center">
-                {% block sideMenu %}{{ include("app/partials/_sidemenu.html.twig") }}{% endblock %}
+                {% block sideMenu %}
+                    {{ include("app/partials/_sidemenu.html.twig") }}
+                {% endblock %}
                 <main {% block mainClass %}class="col-lg-8 px-0 pb-5"{% endblock %}>{% block body %}{% endblock %}</main>
-                {% block sideCart %}{% endblock %}
+                {% block sideCart %}
+                    {{ sessionCart.display() }}
+                {% endblock %}
             </div>
         </div>
         {{ include("app/partials/_footer.html.twig") }}

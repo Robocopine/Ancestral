@@ -28,18 +28,20 @@ class CartController extends AbstractController
         ]);
     }
 
-    #[Route('/ajouter/{id}', name: '_add')]
-    public function add(Cart $cart, Request $request, $id)
+    #[Route('/ajouter/{id}/{route}', name: '_add')]
+    public function add(Cart $cart, Request $request, $id, $route)
     {
        $cart->add($id);
 
-       return $this->redirectToroute('product_index');
+       return $this->redirectToroute($route);
     }
 
-    #[Route('/diminuer/{id}', name: '_decrease')]
-    public function descrease(Cart $cart, Request $request, $id)
+    #[Route('/diminuer/{id}/{route}', name: '_decrease')]
+    public function descrease(Cart $cart, Request $request, $id, $route)
     {
         $cart->decrease($id);
+
+        return $this->redirectToroute($route);
     }
 
     #[Route('/enlever/{id}', name: '_remove')]

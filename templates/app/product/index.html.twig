@@ -4,42 +4,12 @@
 
 {% block title %}{{ controller_name }}{% endblock %}
 
-{% block sideMenu %}
-
-<aside class="col-2 border-end p-5">
-    <h2 class="my-5">Filtrer</h2>
-    <div class="col-10">{{ form(formSearch) }}</div>
-</aside>
-
-{% endblock %}
-
 {% block body %}
 <h1 class="p-5 ">{{ controller_name }}</h1>
 <!-- Index Content -->
 <div class="row  justify-content-center">
     {% for product in pagination.data %}
-    <div class="col-4 mb-5 p-4">
-        <div class="card h-100">
-            <!-- Product image-->
-            <button class="btn-illustration" href=""><img class="card-img-top" data-bs-toggle="modal" data-bs-target="#productShow{{product.id}}" src="{{ product.illustration }}" alt="..." /></button>
-            <!-- Product details-->
-            <div class="card-body p-4">
-                <div class="text-center">
-                    <!-- Product name-->
-                    <h5 class="fw-bolder">{{ product.subtitle }}</h5>
-                    <span>{% include 'app/product/partials/_rating.html.twig' with {'rating': product.avgRatings }  %} 
-                    ({% if  product.comments|length > 0 %}{{ product.comments|length }}{% else %}0{% endif %}) </span><br>
-                    <!-- Product price-->
-                    {{ (product.price)|number_format(2, ',', '.') }} €
-                </div>
-            </div>
-            <!-- Product actions-->
-            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{ path('cart_add', { 'id': product.id }) }}">+</a></div>
-            </div>
-        </div>
-    </div>
-    {% include("app/product/partials/_modal.html.twig")  with {'product': product} %}
+        {% include 'app/partials/_product.html.twig' with {'product' : product} %}
     {% else %}
         <span class="float-sm-start p-5 ms-5">Pas de produits dans cette catégorie</span>
     {% endfor %}
@@ -49,6 +19,4 @@
 </div>
 {% endblock %}
 
-{% block sideCart %}
-    {{ sessionCart.display() }}
-{% endblock %}
+{% set positionFooter = "position-relative" %}
