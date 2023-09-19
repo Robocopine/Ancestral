@@ -7,8 +7,8 @@
 {% block body %}
     <div class="border rounded mt-5 align-middle">
         <div class="p-5">
-            <h1>Mon panier</h1>
-            <p>Retrouvez l'ensemble des produits que vous avez ajouté à votre panier.</p>
+            <h1>{% trans %}Mon panier{% endtrans %}</h1>
+            <p>{% trans %}Retrouvez l'ensemble des produits que vous avez ajouté à votre panier{% endtrans %}.</p>
         </div>
 
         <hr>
@@ -16,11 +16,11 @@
             <table class="table">
                 <thead>
                     <tr>
-                    <th scope="col">Produit</th>
+                    <th scope="col">{% trans %}Produit{% endtrans %}</th>
                     <th scope="col"></th>
-                    <th scope="col">Quantité</th>
-                    <th scope="col">Prix</th>
-                    <th scope="col">Total</th>
+                    <th scope="col">{% trans %}Quantité{% endtrans %}</th>
+                    <th scope="col">{% trans %}Prix{% endtrans %}</th>
+                    <th scope="col">{% trans %}Total{% endtrans %}</th>
                     <th scope="col"></th>
                     </tr>
                 </thead>
@@ -63,16 +63,16 @@
                     {% endfor %}
                     <tr>
                         <td colspan="6" class="text-end">
-                            <p><b>Nombre de produit</b> : {{ totalProducts }}</p>
-                            <p><b>Total de mon panier</b> : {{ ( totalPrices)|number_format(2, ',', '.') }} €</p>
+                            <p><b>{% trans %}Nombre de produit{% endtrans %}</b> : {{ totalProducts }}</p>
+                            <p><b>{% trans %}Total de mon panier{% endtrans %}</b> : {{ ( totalPrices)|number_format(2, ',', '.') }} €</p>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <div class="text-center py-3"> <a class="btn btn-success btn-block" href="{{ path('order_index') }}">Valider mon panier</a> </div> <hr>
+            <div class="text-center py-3"> <a class="btn btn-success btn-block" href="{{ path('order_index') }}">{% trans %}Valider mon panier{% endtrans %}</a> </div> <hr>
         {% else %}
-            <p class="p-5 h5">Le panier est vide.</p>
-            <div class="text-center py-3"><a class="btn btn-primary" href="{{ path('product_index') }}">Retourner aux produits</a></div> <hr>
+            <p class="p-5 h5">{% trans %}Le panier est vide{% endtrans %}.</p>
+            <div class="text-center py-3"><a class="btn btn-primary" href="{{ path('product_index') }}">{% trans %}Retourner aux produits{% endtrans %}</a></div> <hr>
         {% endif %}
     </div>
 {% endblock %}

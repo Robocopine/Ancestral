@@ -1,4 +1,4 @@
-{# templates/app/order/success.html.twig -- show order informations #}
+{# templates/app/order/cancel.html.twig -- cancel order display #}
 
 {% extends 'app/base.html.twig' %}
 
@@ -7,58 +7,58 @@
 {% block mainClass %}class="col-12"{% endblock %}
 
 {% block body %}
-    <div class="p-5">
-        <h2>Erreur de paiement</h2><br/>
-        <p class="alert alert-danger d-inline-block">
-            Il semblerait que votre paiement ait échoué pour votre commande n°<strong>{{ reference }}</strong>. <br/>
-            Vous pouvez réessayer le paiement en <a href="{{ path('order_index') }}">cliquant ici</a>.
-        </p>
-    </div>
-    <hr class="my-0">
 
-    <div class="row">
-        <div class="col-6 p-0">
-            <div class="p-5">
-                <h3>Mon adresse de livraison</h3>
-                <p class="p-3">{{ delivery|raw }}</p>
-            </div>
-            <hr>
-            <div class="p-5">
-                <h3>Mon transporteur</h3>
-                <p class="p-3">
-                    <b>{{ carrier.name }}</b><br/>
-                    {{ carrier.description }}<br/>
-                    {{ carrier.price }}
-                </p>
-            </div>
-        </div>
-        <div class="col-6 border-start py-5">
-            <h3 class="text-center">Mon panier <i class="fa-solid fa-basket-shopping ms-1"></i></h3>
-            <ul class="py-3 container-fluid">
-                {% set total = 0 %}
-                {% set totals = 0 %}
-                {% for products in cartFull %}
-                    {% set product = products.productDetails %}
-                    <div class="row">
-                        <div class="col-2 my-auto ps-5">
-                            <img src="{{ product.illustration }}" alt="{{ product.name }}" width="50px" class="rounded img-fluid me-2" />
-                        </div>
-                        <div class="col-8 my-auto">{{ products.quantity }}x <b class="ms-1">{{ product.subtitle }}</b></div>
-                        <div class="col-2 my-auto">{{ (product.price * products.quantity)|number_format(2, ',', '.') }} €</div>
-                    </div>
-                    {% set total =+ (product.price * products.quantity) %}
-                    {% set totals = totals + total %}
-                {% endfor %}
-            </ul>
-            <hr>
-            <p><b>Sous-Total : </b> {{ (totals)|number_format(2, ',', '.') }} €</p>
-            <p><b>Livraison : </b> {{ (carrier.price)|number_format(2, ',', '.') }} €</p>
-            <hr>
-            <p><b>Total : </b> {{ (totals + carrier.price)|number_format(2, ',', '.') }} €</p>
+<div class="p-5">
+    <h2>{% trans %}Erreur de paiement{% endtrans %}</h2><br/>
+    <p class="alert alert-danger d-inline-block">
+        {% trans %}Il semblerait que votre paiement ait échoué pour votre commande{% endtrans %} n°<strong>{{ reference }}</strong>. <br/>
+        {% trans %}Vous pouvez réessayer le paiement en{% endtrans %} <a href="{{ path('order_index') }}">{% trans %}cliquant ici{% endtrans %}</a>.
+    </p>
+</div>
+<hr class="my-0">
+
+<div class="row">
+    <div class="col-6 p-0">
+        <div class="p-5">
+            <h3>{% trans %}Mon adresse de livraison{% endtrans %}</h3>
+            <p class="p-3">{{ delivery|raw }}</p>
         </div>
         <hr>
+        <div class="p-5">
+            <h3>{% trans %}Mon transporteur{% endtrans %}</h3>
+            <p class="p-3">
+                <b>{{ carrier.name }}</b><br/>
+                {{ carrier.description }}<br/>
+                {{ carrier.price }}
+            </p>
+        </div>
     </div>
-
+    <div class="col-6 border-start py-5">
+        <h3 class="text-center">Mon panier <i class="fa-solid fa-basket-shopping ms-1"></i></h3>
+        <ul class="py-3 container-fluid">
+            {% set total = 0 %}
+            {% set totals = 0 %}
+            {% for products in cartFull %}
+                {% set product = products.productDetails %}
+                <div class="row">
+                    <div class="col-2 my-auto ps-5">
+                        <img src="{{ product.illustration }}" alt="{{ product.name }}" width="50px" class="rounded img-fluid me-2" />
+                    </div>
+                    <div class="col-8 my-auto">{{ products.quantity }}x <b class="ms-1">{{ product.subtitle }}</b></div>
+                    <div class="col-2 my-auto">{{ (product.price * products.quantity)|number_format(2, ',', '.') }} €</div>
+                </div>
+                {% set total =+ (product.price * products.quantity) %}
+                {% set totals = totals + total %}
+            {% endfor %}
+        </ul>
+        <hr>
+        <p><b>{% trans %}Sous-Total{% endtrans %} : </b> {{ (totals)|number_format(2, ',', '.') }} €</p>
+        <p><b>{% trans %}Livraison{% endtrans %}  : </b> {{ (carrier.price)|number_format(2, ',', '.') }} €</p>
+        <hr>
+        <p><b>{% trans %}Total{% endtrans %}  : </b> {{ (totals + carrier.price)|number_format(2, ',', '.') }} €</p>
+    </div>
+    <hr>
+</div>
 
 {% endblock %}
 

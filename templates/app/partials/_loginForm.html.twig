@@ -1,6 +1,8 @@
 {# templates/app/partials/_loginForm.html.twig -- login form of app template  #}
 
-{% if app.user is null %}<div id="userForm" class="modal fade" tabindex="-1"  role="dialog" aria-labelledby="gridSystemModalLabel">
+{% if app.user is null %}
+<!-- Modal to login -->
+<div id="userForm" class="modal fade" tabindex="-1"  role="dialog" aria-labelledby="gridSystemModalLabel">
   <div class="modal-dialog"  role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -8,14 +10,12 @@
         <h4 class="modal-title text-center"><h1 class="h5 font-weight-normal">{% trans %}Connexion{% endtrans %}</h1></h4>
       </div>
       <div class="modal-body">
-        <iframe frameborder="0" scrolling="no" border="0" cellspacing="0" width="100%" src="
-          {{ path('login')}}">
-        </iframe>
+        <iframe frameborder="0" scrolling="no" border="0" cellspacing="0" width="100%" src="{{ path('login')}}"></iframe>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-bs-dismiss="modal">{% trans %}Fermer{% endtrans %}</button>
       </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    </div>
+  </div>
+</div>
 {% endif %}

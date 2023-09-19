@@ -8,10 +8,10 @@
 
 {% block body %}
     <div class="p-5">
-        <h2>Confirmation de la commande</h2><br/>
+        <h2>{% trans %}Confirmation de la commande{% endtrans %}</h2><br/>
         <p class="alert alert-success d-inline-block">
-            Nous vous remercions pour votre commande n°<strong>{{ reference }}</strong>. <br/>
-            Une confirmation vient de vous être envoyée par email à l'adresse <strong>{{ order.user.email }}</strong>. <br/>
+            {% trans %}Nous vous remercions pour votre commande{% endtrans %} n°<strong>{{ reference }}</strong>. <br/>
+            {% trans %}Une confirmation vient de vous être envoyée par email à l'adresse{% endtrans %} <strong>{{ order.user.email }}</strong>. <br/>
         </p>
     </div>
     <hr class="my-0">
@@ -19,12 +19,12 @@
     <div class="row">
         <div class="col-6 p-0">
             <div class="p-5">
-                <h3>Mon adresse de livraison</h3>
+                <h3>{% trans %}Mon adresse de livraison{% endtrans %}</h3>
                 <p class="p-3">{{ delivery|raw }}</p>
             </div>
             <hr>
             <div class="p-5">
-                <h3>Mon transporteur</h3>
+                <h3>{% trans %}Mon transporteur{% endtrans %}</h3>
                 <p class="p-3">
                     <b>{{ carrier.name }}</b><br/>
                     {{ carrier.description }}<br/>
@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="col-6 border-start py-5">
-            <h3 class="text-center">Mon panier <i class="fa-solid fa-basket-shopping ms-1"></i></h3>
+            <h3 class="text-center">{% trans %}Mon panier{% endtrans %} <i class="fa-solid fa-basket-shopping ms-1"></i></h3>
             <ul class="py-3 container-fluid">
                 {% set total = 0 %}
                 {% set totals = 0 %}
@@ -51,14 +51,13 @@
                 {% endfor %}
             </ul>
             <hr>
-            <p><b>Sous-Total : </b> {{ (totals)|number_format(2, ',', '.') }} €</p>
-            <p><b>Livraison : </b> {{ (carrier.price)|number_format(2, ',', '.') }} €</p>
+            <p><b>{% trans %}Sous-Total{% endtrans %} : </b> {{ (totals)|number_format(2, ',', '.') }} €</p>
+            <p><b>{% trans %}Livraison{% endtrans %} : </b> {{ (carrier.price)|number_format(2, ',', '.') }} €</p>
             <hr>
-            <p><b>Total : </b> {{ (totals + carrier.price)|number_format(2, ',', '.') }} €</p>
+            <p><b>{% trans %}Total{% endtrans %} : </b> {{ (totals + carrier.price)|number_format(2, ',', '.') }} €</p>
         </div>
         <hr>
     </div>
-
 
 {% endblock %}
 

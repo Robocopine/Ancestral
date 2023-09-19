@@ -9,9 +9,9 @@
 <!-- Index Content -->
 <div class="row  justify-content-center">
     {% for product in pagination.data %}
-        {% include 'app/partials/_product.html.twig' with {'product' : product} %}
+        {% include 'app/product/partials/_display.html.twig' with {'product' : product} %}
     {% else %}
-        <span class="float-sm-start p-5 ms-5">Pas de produits dans cette catégorie</span>
+        <span class="float-sm-start p-5 ms-5">{% trans %}Pas de produits dans cette catégorie{% endtrans %}</span>
     {% endfor %}
     <div class="col-12 text-center">
         {{ pagination.display() }}

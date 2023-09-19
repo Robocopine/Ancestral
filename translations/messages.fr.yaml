@@ -1,38 +1,165 @@
-# Title 
+#           #
+# -- APP -- #
+#           #
 
-Inscription : Inscription
-Connexion : Connexion
+# base
 
-# Menu
+#
+# CART
+#
 
-Accueil : Accueil
-À propos : À propos
-Nos produits : Nos produits
-Tous les produits : Tous les produits
-Éditions limitées : Éditions limitées
-Nouveautés : Nouveautés
+# index
 
-# Words
+Mon panier : Mon panier
+Retrouvez l'ensemble des produits que vous avez ajouté à votre panier : Retrouvez l'ensemble des produits que vous avez ajouté à votre panier
+Produit : Produit
+Quantité : Quantité
+Prix : Prix
+Total : Total
+Nombre de produit : Nombre de produit
+Total de mon panier : Total de mon panier
+Valider mon panier : Valider mon panier
+Le panier est vide : Le panier est vide
+Retourner aux produits : Retourner aux produits
 
+# --- #
+
+#
+# ORDER
+#
+
+# add
+
+Résumé de la commande : Résumé de la commande
+Vérifiez vos informations avant de payer votre commande : Vérifiez vos informations avant de payer votre commande
+Mon adresse de livraison : Mon adresse de livraison
+Mon transporteur : Mon transporteur
+# (1) Mon panier : Mon panier
+Sous-Total : Sous-Total
+Livraison : Livraison
+# (1) Total : Total
+
+# cancel
+
+Erreur de paiement : Erreur de paiement
+Il semblerait que votre paiement ait échoué pour votre commande : Il semblerait que votre paiement ait échoué pour votre commande
+Vous pouvez réessayer le paiement en : Vous pouvez réessayer le paiement en
+cliquant ici : cliquant ici
+# (1) Mon adresse de livraison : Mon adresse de livraison
+# (1) Mon transporteur : Mon transporteur
+# (2) Mon panier : Mon panier
+# (1) Sous-Total : Sous-Total
+# (1) Livraison : Livraison
+# (2) Total : Total
+
+# index
+
+Ma commande : Ma commande
+Renseignez les informations relatives à votre commande : Renseignez les informations relatives à votre commande
+Choisir mon adresse de livraison : Choisir mon adresse de livraison
+Aucune adresse : Aucune adresse
+Ajouter une nouvelle adresse : Ajouter une nouvelle adresse
+Choisir mon transporteur : Choisir mon transporteur
+# (3) Mon panier : Mon panier
+Ajouter une adresse : Ajouter une adresse
 Fermer : Fermer
-Auteur : Auteur
+Ajouter l'adresse : Ajouter l'adresse
+
+# success
+
+Confirmation de la commande : Confirmation de la commande
+Nous vous remercions pour votre commande : Nous vous remercions pour votre commande
+Une confirmation vient de vous être envoyée par email à l'adresse : Une confirmation vient de vous être envoyée par email à l'adresse
+Mon adresse de livraison : Mon adresse de livraison
+Mon transporteur : Mon transporteur
+# (4) Mon panier : Mon panier
+# (2) Sous-Total : Sous-Total
+# (2) Livraison : Livraison
+# (3) Total : Total
+
+# --- #
 
 #
 # PAGE
 #
 
+# index
+
+controller_home : Distillerie Belgique
+Précédent : Précédent
+Suivant : Suivant
+Éditions limitées : Éditions limitées
+Nouveautés : Nouveautés
+
+# --- #
+
 #
-# Includes
+# PRODUCT
 #
 
-# sidemenu
+# (_partials)
+# > _product (null)
+# > _modal
+# (1) Fermer : Fermer
+# > _rating (null)
+
+# base (null)
+# index
+
+Pas de produits dans cette catégorie : Pas de produits dans cette catégorie
+
+# show
+
+Avis du produit : Avis du produit
+Aucun avis pour le moment : Aucun avis pour le moment
+Ajouter un nouveau commentaire : Ajouter un nouveau commentaire
+Commenter : Commenter
+
+# --- #
+
+#
+# _PARTIALS
+#
+
+# _footer
+
+Conversation : Conversation
+Nombres d'articles : Nombres d'articles
+
+# _header (null)
+
+# _language (null)
+
+# _legalAge
+
+legal.age.message : Pour naviguer sur le site de notre boutique, vous devez déclarer que vous avez l'âge légal pour acheter de l'alcool dans votre pays.
+legal.age.true : Oui, j'ai l'âge légal
+legal.age.false : Non, je ne l'ai pas
+
+# _loginForm
+
+Connexion : Connexion
+# (2) Fermer : Fermer
+
+# _navtop
+
+Accueil : Accueil
+À propos : À propos
+Nos produits : Nos produits
+Tous les produits : Tous les produits
+# (1) Éditions limitées : Éditions limitées
+# (1) Nouveautés : Nouveautés
+# (1) Connexion : Connexion
+
+# _sidecart
+
+# (5) Mon panier : Mon panier
+Accéder au panier : Accéder au panier
+# (3) Fermer : Fermer
+
+# _sidemenu
 
 Filtre : Filtre
-
-# sidecart
-
-Mon panier : Mon panier
-Accéder au panier : Accéder au panier
 
 #
 # FORM

@@ -1,3 +1,5 @@
+{# templates/app/product/show.html.twig -- display of a product by id  #}
+
 {% extends 'app/product/base.html.twig' %}
 
 {% block body %}
@@ -12,7 +14,7 @@
         <p class="text-justify">{{product.description}}</p>
     </div>
     <div class="col-12 text-center">
-        Video
+        <!-- Video -->
     </div>
     <hr>
     <!-- Comments product -->
@@ -35,17 +37,17 @@
                 <img src="{% if user is not empty %}{{ asset('src/user/avatar/null.png') }}{% else %}{{ asset('src/user/avatar/null.png') }}{% endif %}" class="me-1 rounded-circle" width="20px" alt="Avatar {{comment.author}}"> 
                 {{comment.author}}
             </b><br/>
-            <span>nb avis + verifié</span><br/>
+            <span><!-- nb avis + verifié --></span><br/>
             {% include 'app/product/partials/_rating.html.twig' with {'rating': comment.rating}  %}
             <span class="ms-2">{{comment.createdAt|date("d/m/Y", "Europe/Paris")}}</span>
             </p>
         <hr>
         {% endfor %}
         {% else %}
-        <span>Aucun avis pour le moment</span>
+        <span>{% trans %}Aucun avis pour le moment{% endtrans %}</span>
         {% endif %}
         <div class="mt-5">
-        <h5>Ajouter un nouveau commentaire</h5>
+        <h5>{% trans %}Ajouter un nouveau commentaire{% endtrans %}</h5>
         {{ form_start(formComment) }}
             {% if app.user %}
             <div class="py-3">
@@ -55,7 +57,7 @@
             {% endif %}
             {{ form_widget(formComment) }}
             <button type="submit" class="btn btn-primary">
-            Commenter
+            {% trans %}Commenter{% endtrans %}
             </button>
         {{ form_end(formComment) }}
         </div> 

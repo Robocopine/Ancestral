@@ -1,0 +1,24 @@
+{# templates/app/product/partials/_display.html.twig -- Display of a product  #}
+
+<div class="col-sm-4 mb-5 p-4">
+    <div class="card h-100">
+        <!-- Product image-->
+        <button class="btn-illustration" href=""><img class="card-img-top" data-bs-toggle="modal" data-bs-target="#productShow{{product.id}}" src="{{ product.illustration }}" alt="..." /></button>
+        <!-- Product details-->
+        <div class="card-body p-4">
+            <div class="text-center">
+                <!-- Product name-->
+                <h5 class="fw-bolder">{{ product.subtitle }}</h5>
+                <span>{% include 'app/product/partials/_rating.html.twig' with {'rating': product.avgRatings }  %} 
+                ({% if  product.comments|length > 0 %}{{ product.comments|length }}{% else %}0{% endif %}) </span><br>
+                <!-- Product price-->
+                {{ (product.price)|number_format(2, ',', '.') }} €
+            </div>
+        </div>
+        <!-- Product actions-->
+        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{ path('cart_add', { 'id': product.id, 'route': app.request.get('_route') }) }}">+</a></div>
+        </div>
+    </div>
+</div>
+{% include("app/product/partials/_modal.html.twig")  with {'product': product} %}

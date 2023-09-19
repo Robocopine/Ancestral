@@ -14,7 +14,7 @@
                         <li><a class="dropdown-item" href="{{ path('product_index') }}">{% trans %}Tous les produits{% endtrans %}</a></li>
                         <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" href="#!">{% trans %}Éditions limitées{% endtrans %}</a></li>
-                        <li><a class="dropdown-item" href="#!">Nouveautés</a></li>
+                        <li><a class="dropdown-item" href="#!">{% trans %}Nouveautés{% endtrans %}</a></li>
                     </ul>
                 </li>
             </ul>
@@ -40,7 +40,7 @@
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#userForm">
                     <i class="fa-solid fa-user me-1"></i>
-                    Login
+                    {% trans %}Connexion{% endtrans %}
                 </button>
             {% else %}
                 <a class="btn btn-outline-dark" href="{{ path('account_show') }}" >
@@ -48,21 +48,7 @@
                     {{app.user.fullName}}
                 </a>
             {% endif %}
-            
         </div>
     </div>
 </nav>
 
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-modal="true" role="dialog">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body">
-        <p>Pour naviguer sur le site de notre boutique, vous devez déclarer que vous avez l'âge légal pour acheter de l'alcool dans votre pays.</p>
-      </div>
-      <div class="modal-footer">
-        <a href="" class="btn btn-primary">Oui, j'ai l'âge légal</a>
-        <a href="" class="btn btn-secondary">Non, je ne l'ai pas</a>
-      </div>
-    </div>
-  </div>
-</div>

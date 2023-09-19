@@ -38,7 +38,7 @@ class PageController extends AbstractController
         $formSearch->handleRequest($request);
 
         return $this->render('app/page/index.html.twig', [
-            'controller_name' => 'Accueil',
+            'controller_home' => 'controller_home',
             'sessionCart' => $sessionCart,
             'formSearch' => $formSearch,
             'limitedProducts' => $limitedProducts,

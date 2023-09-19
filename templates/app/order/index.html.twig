@@ -10,31 +10,31 @@
 
 {% block body %}
 <div class="p-5">
-    <h2>Ma commande</h2>
-    <p>Renseignez les informations relatives à votre commande</p>
+    <h2>{% trans %}Ma commande{% endtrans %} </h2>
+    <p>{% trans %}Renseignez les informations relatives à votre commande{% endtrans %} </p>
 </div>
 <hr class="my-0">
 {{ form_start(form, {action:path('order_resume')}) }}
     {% set formHtml %}
         <div class="row">
             <div class="col-6 py-5 px-5">
-                <h3>Choisir mon adresse de livraison</h3>
+                <h3>{% trans %}Choisir mon adresse de livraison{% endtrans %} </h3>
                 <div class="p-3">
                     <div class="row {%  if app.user.addresses is empty %}d-none{% endif %}" >
                         {{ form_row(form.addresses) }}
                     </div>
                     {%  if app.user.addresses is empty %}
-                    <p class="p-3">Aucune adresse</p>
+                    <p class="p-3">{% trans %}Aucune adresse{% endtrans %} </p>
                     {% endif %}
                     <button type="button" class="btn btn-primary mb-3 mt-2" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-                        Ajouter une nouvelle adresse
+                        {% trans %}Ajouter une nouvelle adresse{% endtrans %} 
                     </button>
-                    <h3>Choisir mon transporteur</h3>
+                    <h3>{% trans %}Choisir mon transporteur{% endtrans %} </h3>
                     {{ form_row(form.carriers) }} 
                 </div>
             </div>
             <div class="col-6 border-start py-5">
-                <h3 class="text-center">Mon panier <i class="fa-solid fa-basket-shopping ms-1"></i></h3>
+                <h3 class="text-center">{% trans %}Mon panier{% endtrans %} <i class="fa-solid fa-basket-shopping ms-1"></i></h3>
                 <ul class="py-3 container-fluid">
                     {% for products in cartFull %}
                         {% set product = products.product %}
@@ -60,15 +60,15 @@
         <div class="modal-content">
             {{ form_start(formAddress) }}
                 <div class="modal-header px-5 py-3">
-                    <h1 class="modal-title fs-5" id="exampleModalCenterTitle">Ajouter une adresse</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalCenterTitle">{% trans %}Ajouter une adresse{% endtrans %} </h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-5">
                     {{ form_widget(formAddress) }}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                    <button type="button" type="submit" class="btn btn-primary">Ajouter l'adresse</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans %}Fermer{% endtrans %} </button>
+                    <button type="button" type="submit" class="btn btn-primary">{% trans %}Ajouter l'adresse{% endtrans %} </button>
                 </div>
             {{ form_end(formAddress) }}
         </div>

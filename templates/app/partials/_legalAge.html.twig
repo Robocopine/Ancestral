@@ -1,0 +1,15 @@
+{# templates/app/partials/_legalAge.html.twig -- Modal to age verifying  #}
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p>{% trans %}legal.age.message{% endtrans %}</p>
+      </div>
+      <div class="modal-footer">
+        <a href="" class="btn btn-primary">{% trans %}legal.age.true{% endtrans %}</a>
+        <a href="" class="btn btn-secondary">{% trans %}legal.age.false{% endtrans %}</a>
+      </div>
+    </div>
+  </div>
+</div>
