@@ -2,6 +2,7 @@
 
 namespace App\Controller\App;
 
+use App\Classe\Cart;
 use App\Classe\Search;
 use App\Entity\Comment;
 use App\Entity\Product;
@@ -29,7 +30,7 @@ class ProductController extends AbstractController
     }
 
     #[Route('s/{page<\d+>?1}/{search?null}', name: 'index')]
-    public function index(Request $request, PaginationService $pagination, CartService $sessionCart, $page, $search): Response
+    public function index(Request $request, PaginationService $pagination, CartService $sessionCart, Cart $cart, $page, $search): Response
     {
         $products = $this->entityManager->getRepository(Product::class)->findAll();
 
@@ -60,6 +61,7 @@ class ProductController extends AbstractController
             'pagination' => $pagination,
             'formSearch' => $formSearch,
             'sessionCart' => $sessionCart,
+            'cart' => $cart->getFull(),
             'search' => $search,
         ]);
     }

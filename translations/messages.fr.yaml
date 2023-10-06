@@ -70,8 +70,8 @@ Ajouter l'adresse : Ajouter l'adresse
 Confirmation de la commande : Confirmation de la commande
 Nous vous remercions pour votre commande : Nous vous remercions pour votre commande
 Une confirmation vient de vous être envoyée par email à l'adresse : Une confirmation vient de vous être envoyée par email à l'adresse
-Mon adresse de livraison : Mon adresse de livraison
-Mon transporteur : Mon transporteur
+# (3) Mon adresse de livraison : Mon adresse de livraison
+# (2) Mon transporteur : Mon transporteur
 # (4) Mon panier : Mon panier
 # (2) Sous-Total : Sous-Total
 # (2) Livraison : Livraison

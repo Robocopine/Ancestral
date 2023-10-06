@@ -2,6 +2,7 @@
 
 namespace App\Controller\App;
 
+use App\Classe\Cart;
 use App\Classe\Mail;
 use App\Classe\Search;
 use App\Entity\Product;
@@ -25,7 +26,7 @@ class PageController extends AbstractController
     }
     
     #[Route('/', name: 'home')]
-    public function index(CartService $sessionCart, Request $request): Response
+    public function index(CartService $sessionCart, Cart $cart, Request $request): Response
     {
         $limitedProducts = $this->entityManager->getRepository(Product::class)->findBy(
             ['isLimited' => '1'],
@@ -39,6 +40,7 @@ class PageController extends AbstractController
 
         return $this->render('app/page/index.html.twig', [
             'controller_home' => 'controller_home',
+            'cart' => $cart->getFull(),
             'sessionCart' => $sessionCart,
             'formSearch' => $formSearch,
             'limitedProducts' => $limitedProducts,

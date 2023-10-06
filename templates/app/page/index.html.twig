@@ -9,7 +9,7 @@
 <!-- Index Content -->
 
 <!-- Carousel --> 
-<div id="carouselExample" class="carousel slide">
+<div id="carouselExample" class="carousel slide mb-5">
     <div class="carousel-inner">
         <div class="carousel-item active">
             <svg class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: First slide" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#555" dy=".3em">First slide</text></svg>
@@ -33,21 +33,25 @@
 
 <!-- Limited Edition -->
 {% if limitedProducts is not empty %}
-    <div class="row justify-content-center m-3">
-        <h1>{% trans %}Éditions limitées{% endtrans %}</h1>
-        {% for product in limitedProducts %}
-            {% include 'app/product/partials/_display.html.twig' with {'product' : product} %}
-        {% endfor %}
+    <h2 class="text-center mb-5">{% trans %}Éditions limitées{% endtrans %}</h2>
+    <div class="container horizontal-scrollable mb-sm-3">
+        <div class="row flex-sm-wrap flex-nowrap justify-content-sm-center text-center ">
+            {% for product in limitedProducts %}
+                {% include 'app/product/partials/_display.html.twig' with {'product' : product } %}
+            {% endfor %}
+        </div>
     </div>
 {% endif %}
 
 <!-- Limited Edition -->
 {% if lastProducts is not empty %}
-    <div class="row justify-content-center m-3">
-        <h1>>{% trans %}Nouveautés{% endtrans %}</h1>
-        {% for product in lastProducts %}
-            {% include 'app/product/partials/_display.html.twig' with {'product' : product} %}
-        {% endfor %}
+    <h2 class="text-center mb-5">{% trans %}Nouveautés{% endtrans %}</h2>
+    <div class="container horizontal-scrollable">
+        <div class="row flex-sm-wrap flex-nowrap justify-content-sm-center">
+            {% for product in lastProducts %}
+                {% include 'app/product/partials/_display.html.twig' with {'product' : product} %}
+            {% endfor %}
+        </div>
     </div>
 {% endif %}
 

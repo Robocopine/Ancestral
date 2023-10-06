@@ -1,4 +1,14 @@
 @import url('./style.css');
+@font-face {
+    font-family: "CooperBT";
+    src:
+      local("Trickster"),
+      url("../fonts/cooperBT.ttf") format("truetype")
+}
+
+h2{
+    font-family: "CooperBT";  
+}
 
 #userForm{
     .modal-dialog{
@@ -65,6 +75,18 @@ body{
         text-align: center;
     }
 }
+
+
+.horizontal-scrollable > .row { 
+    overflow-x: auto!important; 
+    white-space: nowrap!important; 
+} 
+    
+.horizontal-scrollable > .row > .col-xs-4 { 
+    display: inline-block!important; 
+    float: none!important; 
+} 
+
 
 
 footer{

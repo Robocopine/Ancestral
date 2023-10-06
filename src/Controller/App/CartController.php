@@ -19,6 +19,7 @@ class CartController extends AbstractController
     {
         $this->entityManager = $entityManager;
     }
+    
     #[Route('', name: '_index')]
     public function index(Cart $cart): Response
     {

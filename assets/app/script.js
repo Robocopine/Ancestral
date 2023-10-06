@@ -23,11 +23,18 @@ global.$ = global.jQuery = $;
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.scss';
 
-import * as bootstrap from 'bootstrap';
+$("#legalAgeTrue").on( "click", function() {
+    sessionStorage.setItem("legalAge", 1);
+    window.location.reload();
+} );
 
-const myModal = new bootstrap.Modal('#exampleModalCenter', {
-    keyboard: false,
-    backdrop: 'static',
-});
+$("#legalAgeFalse").on( "click", function() {
+    window.location.href='https://www.jeunesetalcool.be/';
+} );
 
-//myModal.show();
+if(sessionStorage.getItem("legalAge") == 1){
+    $('#modalLegalAge').modal('hide');
+}else{
+    $('#modalLegalAge').modal('show');
+}
+
