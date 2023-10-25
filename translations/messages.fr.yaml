@@ -161,9 +161,48 @@ Accéder au panier : Accéder au panier
 
 Filtre : Filtre
 
+#                #
+# -- SECURITY -- #
+#                #
+
+# base
+
+# confirmation_email
+
+# login
+
+# register
+
+# --- #
+
 #
-# FORM
+# RESET_PASSWORD
 #
+
+# check_email
+
+L'email pour réinitialiser votre mot de passe a été envoyé avec succès à : L'email pour réinitialiser votre mot de passe a été envoyé avec succès à
+L'email : L'email
+pour réinitialiser ne correspond à aucun utilisateur enregistré : pour réinitialiser ne correspond à aucun utilisateur enregistré
+Une erreur s'est produite lors de la réinitalisation de mot de passe : Une erreur s'est produite lors de la réinitalisation de mot de passe
+Si un compte correspondant à votre adresse e-mail existe, un e-mail contenant un lien pour réinitialiser votre mot de passe vient d'être envoyé. Ce lien expirera dans : Si un compte correspondant à votre adresse e-mail existe, un e-mail contenant un lien pour réinitialiser votre mot de passe vient d'être envoyé. Ce lien expirera dans
+Si vous ne recevez pas notre email, regardez s'il vous plaît sans vos spams ou : Si vous ne recevez pas notre email, regardez s'il vous plaît sans vos spams ou
+
+# email
+
+# request
+
+Réinitialiser mon mot de passe : Réinitialiser mon mot de passe
+Entrez votre email et nous vous enverrons un lien par email pour réinitaliser votre mot de passe : Entrez votre email et nous vous enverrons un lien par email pour réinitaliser votre mot de passe
+Réinitialiser : Réinitialiser 
+
+# reset
+
+
+
+#            #
+# -- FORM -- #
+#            #
 
 # Connection
 

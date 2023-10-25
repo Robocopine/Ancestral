@@ -52,6 +52,12 @@ class Product
     #[ORM\Column]
     private ?bool $isLimited = null;
 
+    #[ORM\Column]
+    private ?float $weight = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $width = null;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -229,6 +235,30 @@ class Product
 
     public function __toString(){
         return $this->getSlug();
+    }
+
+    public function getWeight(): ?float
+    {
+        return $this->weight;
+    }
+
+    public function setWeight(float $weight): self
+    {
+        $this->weight = $weight;
+
+        return $this;
+    }
+
+    public function getWidth(): ?string
+    {
+        return $this->width;
+    }
+
+    public function setWidth(string $width): self
+    {
+        $this->width = $width;
+
+        return $this;
     }
     
 }

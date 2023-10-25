@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Classe\Search;
 use App\Entity\Product;
+use App\Entity\Category;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
@@ -51,10 +52,32 @@ class ProductRepository extends ServiceEntityRepository
         ->select('c', 'p')
         ->join('p.category', 'c');
 
-        if(!empty($search->categories)) {
+        if(!empty($search->string)){
             $query = $query
-                ->andWhere('c.id IN (:categories)')
-                ->setParameter('categories', $search->categories)
+                ->andWhere('p.name LIKE :string')
+                ->setParameter('string', "%{$search->string}%")
+            ;
+        }
+
+        return $query->getQuery();
+
+    }
+
+    /**
+     * Request to get an array of product by filter
+     * @param Search $search
+     * @return Product[] 
+     */
+    public function findWithSearchAndCategory(Search $search, $category){
+        $query = $this
+        ->createQueryBuilder('p')
+        ->select('c', 'p')
+        ->join('p.category', 'c');
+
+        if(!empty($category)) {
+            $query = $query
+                ->andWhere('c.id = (:category)')
+                ->setParameter('category', $category)
             ;
         }
 
@@ -66,7 +89,29 @@ class ProductRepository extends ServiceEntityRepository
         }
 
         return $query->getQuery();
+    }
 
+    public function findByCategory(Search $search, Category $category){
+        $query = $this
+        ->createQueryBuilder('p')
+        ->select('c', 'p')
+        ->join('p.category', 'c');
+
+        if(!empty($category)) {
+            $query = $query
+                ->andWhere('c == (:category)')
+                ->setParameter('category', $category)
+            ;
+        }
+
+        if(!empty($search->string)){
+            $query = $query
+                ->andWhere('p.name LIKE :string')
+                ->setParameter('string', "%{$search->string}%")
+            ;
+        }
+
+        return $query->getQuery();
     }
 
     /**

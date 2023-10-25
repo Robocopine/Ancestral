@@ -1,0 +1,41 @@
+{# templates/admin/client_edit/edit.html.twig -- Edit a client element #}
+
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ controller_name }}{% endblock %}
+
+{% block body %}
+    <h1>Edit Element client</h1>
+
+    {{ form_start(form) }}
+
+        <div class="col"  disabled>
+            {{ form_row(form.section) }}
+        </div>
+        <div id="form-file" class="col {% if (client_edit.section == null) or (client_edit.section.type != "file") %}d-none{% endif %}">
+            {{ form_row(form.file) }}
+        </div>
+        <div id="form-string" class="col {% if (client_edit.section == null) or (client_edit.section.type != "string") %}d-none{% endif %}">
+            {{ form_row(form.string) }}
+        </div>
+        
+        <button type="submit" class="btn btn-primary my-3">{% trans %}Modifier{% endtrans %}</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('admin_client_edit_index') }}">back to list</a>
+
+{% endblock %}
+
+{% block javascripts %}
+    {% set fileUrl ="./src/edit/img/"  ~ client_edit.content  %}
+    {{ parent() }}
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('select#client_edit_section').attr('disabled', 'disabled');
+            $( "<br><span class='text-secondary'>Fichier Actuel : <img src='{{ asset(fileUrl)}}' width='50px' class='rounded mb-2' /></span>").insertBefore("#client_edit_file");
+            $("#client_edit_string").val("{{client_edit.content}}");
+            $("#client_edit_text").val("{{client_edit.content}}");
+        });
+    </script>
+{% endblock %}

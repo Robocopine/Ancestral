@@ -17,25 +17,7 @@ class SearchType extends AbstractType
     {
         $builder
             ->add('string', TextType::class, [
-                'label' => 'search.string.label',
-                'required' => false,
-                'attr' => [
-                    'placeholder' => 'search.string.placeholder',
-                    'class' => 'form-control-sm',
-                ]
-            ])
-            ->add('categories', EntityType::class, [
-                'label' => false,
-                'required' => false,
-                'class' => Category::class,
-                'multiple' => true,
-                'expanded' => true,
-            ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'search.submit.label',
-                'attr' => [
-                    'class' => 'btn btn-primary',
-                ]
+                'label' => ' ',
             ])
         ;
     }

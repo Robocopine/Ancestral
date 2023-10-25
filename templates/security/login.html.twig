@@ -2,7 +2,7 @@
 
 {% block body %}
 
-<form method="post">
+<form method="post" class="mx-3 mt-3">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
@@ -14,15 +14,18 @@
         </script>
     {% endif %}
 
-    <h2 class="h3 mb-3 font-weight-normal">{% trans %}Connectez-vous{% endtrans %}</h2>
+    <h1 class="h3 mb-4 font-weight-normal text-center">{% trans %}Connectez-vous{% endtrans %}</h1>
     <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control mb-2" autocomplete="email" required autofocus>
     <label for="inputPassword">{% trans %}Mot de passe{% endtrans %}</label>
     <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
     <input type="hidden" name="_csrf_token"
         value="{{ csrf_token('authenticate') }}"
     >
+    <div class="mt-2 mb-2">
+        <a href="{{ path('security_forgot_password_request') }}">Mot de passe oublié ?</a> / <a href="">S'inscrire</a>
+    </div>
     <div class="text-center">
         <button class="btn btn-lg btn-primary mt-3" type="submit" onclick="closeIframe();">
             {% trans %}Connexion{% endtrans %}

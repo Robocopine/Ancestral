@@ -6,6 +6,7 @@ use App\Classe\Search;
 use App\Entity\Address;
 use App\Form\App\SearchType;
 use App\Service\CartService;
+use App\Service\EditService;
 use App\Security\EmailVerifier;
 use App\Form\Security\AccountType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,10 +22,14 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class AccountController extends AbstractController
 {
     private EmailVerifier $emailVerifier;
+    private $entityManager;
+    private $editService;
 
-    public function __construct(EmailVerifier $emailVerifier)
+    public function __construct(EmailVerifier $emailVerifier, EntityManagerInterface $entityManager, EditService $editService)
     {
         $this->emailVerifier = $emailVerifier;
+        $this->entityManager = $entityManager;
+        $this->editService = $editService;
     }
     
     #[Route('/', name: 'show')]
@@ -40,11 +45,12 @@ class AccountController extends AbstractController
             'controller_name' => 'Mon compte',
             'formSearch' => $formSearch,
             'sessionCart' => $sessionCart,
+            'items' => $this->editService->getItems(),
         ]);
     }
 
     #[Route('/modifier-infos', name: 'edit')]
-    public function edit(Request $request, UserPasswordHasherInterface $encoder, EntityManagerInterface $entityManager, CartService $sessionCart): Response
+    public function edit(Request $request, UserPasswordHasherInterface $encoder, CartService $sessionCart): Response
     {
         // Filter by name and category
         $search = new Search();
@@ -56,7 +62,6 @@ class AccountController extends AbstractController
         $address = new Address();
         $form = $this->createForm(AccountType::class, $user);
         $form->handleRequest($request);
-        
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -74,14 +79,14 @@ class AccountController extends AbstractController
 
             foreach($user->getAddresses() as $address){
                 $address->setUser($user);
-                $entityManager->persist($address);
+                $this->entityManager->persist($address);
             }
 
             if($oldEmail != $form->get('email')->getData()){
                 $user->setIsVerified(0);
             }
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
 
             if($oldEmail != $form->get('email')->getData()){
                 // generate a signed url and email it to the user
@@ -103,8 +108,8 @@ class AccountController extends AbstractController
             'controller_name' => 'Modification de mes informations personnelles',
             'formSearch' => $formSearch,
             'sessionCart' => $sessionCart,
+            'items' => $this->editService->getItems(),
         ]);
     }
-
     
 }

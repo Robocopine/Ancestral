@@ -9,6 +9,7 @@ use App\Entity\Product;
 use App\Entity\Category;
 use App\Form\App\SearchType;
 use App\Service\CartService;
+use App\Service\EditService;
 use App\Form\App\CommentType;
 use App\Repository\UserRepository;
 use App\Service\PaginationService;
@@ -23,38 +24,52 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ProductController extends AbstractController
 {
     private $entityManager;
+    private $editService;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, EditService $editService)
     {
         $this->entityManager = $entityManager;
+        $this->editService = $editService;
     }
 
-    #[Route('s/{page<\d+>?1}/{search?null}', name: 'index')]
-    public function index(Request $request, PaginationService $pagination, CartService $sessionCart, Cart $cart, $page, $search): Response
+    #[Route('s/{page<\d+>?1}/{categoryName?tout}/{search?null}', name: 'index')]
+    public function index(Request $request, PaginationService $pagination, CartService $sessionCart, Cart $cart, $page, $categoryName, $search): Response
     {
         $products = $this->entityManager->getRepository(Product::class)->findAll();
-
         // Filter by name and category
         $search = new Search();
         $formSearch = $this->createForm(SearchType::class, $search);
         $formSearch->handleRequest($request);
-
-        // Display products by filters
-        if($formSearch->isSubmitted() && $formSearch->isValid()){
-            
-            $products = $this->entityManager->getRepository(Product::class)->findWithSearch($search);
+        $category = $this->entityManager->getRepository(Category::class)->findOneByName($categoryName);
+        if($category != null && $categoryName != "tout"){
+            $products = $this->entityManager->getRepository(Product::class)->findWithSearchAndCategory($search, $category);
             
             $pagination->setRequestEntityComplete($products)
                 ->setLimit(15)
                 ->setPage($page)
             ;
-                      
         }else{
-            $pagination->setEntityClass(Product::class)
-                ->setLimit(15)
-                ->setPage($page)
-            ;
+            // Display products by filters
+            if($formSearch->isSubmitted() && $formSearch->isValid()){
+                
+                $products = $this->entityManager->getRepository(Product::class)->findWithSearch($search);
+                
+                $pagination->setRequestEntityComplete($products)
+                    ->setLimit(15)
+                    ->setPage($page)
+                ;
+                        
+            }else{
+                $pagination->setEntityClass(Product::class)
+                    ->setLimit(15)
+                    ->setPage($page)
+                ;
+            }
+        
         }
+        
+
+        
 
         return $this->render('app/product/index.html.twig', [
             'controller_name' => 'Nos produits',
@@ -63,6 +78,7 @@ class ProductController extends AbstractController
             'sessionCart' => $sessionCart,
             'cart' => $cart->getFull(),
             'search' => $search,
+            'items' => $this->editService->getItems(),
         ]);
     }
 
@@ -86,6 +102,7 @@ class ProductController extends AbstractController
             'product' => $product,
             'formComment' => $formComment,
             'users' => $users->findAll(),
+            'items' => $this->editService->getItems(),
         ]);
     }
 }

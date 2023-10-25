@@ -8,6 +8,7 @@ use App\Classe\Search;
 use App\Entity\Product;
 use App\Form\App\SearchType;
 use App\Service\CartService;
+use App\Service\EditService;
 use App\Service\LoginService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,14 +20,16 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class PageController extends AbstractController
 {
     private $entityManager;
+    private $editService;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, EditService $editService)
     {
         $this->entityManager = $entityManager;
+        $this->editService = $editService;
     }
     
     #[Route('/', name: 'home')]
-    public function index(CartService $sessionCart, Cart $cart, Request $request): Response
+    public function index(EditService $editService, CartService $sessionCart, Cart $cart, Request $request): Response
     {
         $limitedProducts = $this->entityManager->getRepository(Product::class)->findBy(
             ['isLimited' => '1'],
@@ -45,6 +48,8 @@ class PageController extends AbstractController
             'formSearch' => $formSearch,
             'limitedProducts' => $limitedProducts,
             'lastProducts' => $lastProducts,
+            'search' => $search,
+            'items' => $this->editService->getItems(),
         ]);
     }
 

@@ -1,0 +1,13 @@
+{# templates/admin/section/new.html.twig -- New section  #}
+
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ controller_name }}{% endblock %}
+
+{% block body %}
+    <h1>Create new Section</h1>
+
+    {{ include('admin/partials/_form.html.twig') }}
+
+    <a href="{{ path('admin_section_index') }}">back to list</a>
+{% endblock %}

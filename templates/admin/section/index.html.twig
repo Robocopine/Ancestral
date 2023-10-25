@@ -1,0 +1,50 @@
+{# templates/admin/section/index.html.twig -- The index of all sections #}
+
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ controller_name }}{% endblock %}
+
+{% block body %}
+
+<a class="btn btn-primary float-end mt-5" href="{{ path('admin_section_new') }}">+</a>
+
+<h1 class="my-5">Liste des sections</h1>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for section in pagination.data %}
+        <tr>
+            <td>{{ section.id }}</td>
+            <td>{{ section.name }}</td>
+            <td>
+                <a href="{{ path('admin_section_edit', {'id': section.id}) }}"><i class="fas fa-edit"></i></a>
+                {% set textDelete, linkDelete, paramsDelete, modalId = "Êtes vous-sûre de supprimer <b>" ~ section.name ~ "</b>?<br> Vous perdrez toutes les informations.", "admin_section_delete", {'id': section.id}, section.id  %}
+                {{ include("/admin/partials/_delete.html.twig") }}
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#deleteModal{{section.id}}">
+                    <span><a class="text-danger"><i class="fas fa-trash"></i></a></span>
+                </button>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="4">Aucune section enregistrée</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="4" class="pt-4 pb-0">
+                {{ pagination.display() }}
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+{% endblock %}

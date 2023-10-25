@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Conversation;
+use App\Entity\ClientEdit;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Conversation>
+ * @extends ServiceEntityRepository<ClientEdit>
  *
- * @method Conversation|null find($id, $lockMode = null, $lockVersion = null)
- * @method Conversation|null findOneBy(array $criteria, array $orderBy = null)
- * @method Conversation[]    findAll()
- * @method Conversation[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method ClientEdit|null find($id, $lockMode = null, $lockVersion = null)
+ * @method ClientEdit|null findOneBy(array $criteria, array $orderBy = null)
+ * @method ClientEdit[]    findAll()
+ * @method ClientEdit[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ConversationRepository extends ServiceEntityRepository
+class ClientEditRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Conversation::class);
+        parent::__construct($registry, ClientEdit::class);
     }
 
-    public function save(Conversation $entity, bool $flush = false): void
+    public function save(ClientEdit $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class ConversationRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Conversation $entity, bool $flush = false): void
+    public function remove(ClientEdit $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class ConversationRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Conversation[] Returns an array of Conversation objects
+//     * @return ClientEdit[] Returns an array of ClientEdit objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class ConversationRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Conversation
+//    public function findOneBySomeField($value): ?ClientEdit
 //    {
 //        return $this->createQueryBuilder('c')
 //            ->andWhere('c.exampleField = :val')

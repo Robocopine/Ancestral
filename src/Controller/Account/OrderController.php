@@ -8,6 +8,7 @@ use App\Entity\Carrier;
 use App\Entity\Product;
 use App\Form\App\SearchType;
 use App\Service\CartService;
+use App\Service\EditService;
 use App\Service\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,10 +20,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class OrderController extends AbstractController
 {
     private $entityManager;
+    private $editService;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, EditService $editService)
     {
         $this->entityManager = $entityManager;
+        $this->editService = $editService;
     }
     
     #[Route('s/{page<\d+>?1}/', name: 'index')]
@@ -45,6 +48,7 @@ class OrderController extends AbstractController
             'formSearch' => $formSearch,
             'sessionCart' => $sessionCart,
             'orders' => $pagination->getData(),
+            'items' => $this->editService->getItems(),
         ]);
     }
 
@@ -74,6 +78,7 @@ class OrderController extends AbstractController
             'order' => $order,
             'carrier' => $carrier,
             'cartFull' => $product_object,
+            'items' => $this->editService->getItems(),
         ]);
     }
 }

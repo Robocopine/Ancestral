@@ -1,11 +1,23 @@
-{% extends 'app/base.html.twig' %}
-
-{% block title %}Password Reset Email Sent{% endblock %}
+{% extends 'security/base.html.twig' %}
 
 {% block body %}
-    <p>
-        If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password.
-        This link will expire in {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
-    </p>
-    <p>If you don't receive an email please check your spam folder or <a href="{{ path('account_forgot_password_request') }}">try again</a>.</p>
+    {% for flash_error in app.flashes('reset_password_error') %}
+            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+        {% endfor %}
+    <div class="m-3">
+        {% if message == "success" %}
+            <div class="alert alert-success" role="alert">
+                {% trans %}L'email pour réinitialiser votre mot de passe a été envoyé avec succès à{% endtrans %} <b>{{ email}}</b>.
+            </div>
+        {% elseif message == "errorUser" %}
+            <div class="alert alert-danger" role="alert">
+                {% trans %}L'email{% endtrans %} (<b>{{ email }}</b>) {% trans %}pour réinitialiser ne correspond à aucun utilisateur enregistré{% endtrans %}.
+            </div>
+        {% endif %}
+        <p>
+            {% trans %}Si un compte correspondant à votre adresse e-mail existe, un e-mail contenant un lien pour réinitialiser votre mot de passe vient d'être envoyé.
+            Ce lien expirera dans{% endtrans %} {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+        </p>
+        <p>{% trans %}Si vous ne recevez pas notre email, regardez s'il vous plaît sans vos spams ou{% endtrans %} <a href="{{ path('security_forgot_password_request') }}"> {% trans %}réessayez à nouveau{% endtrans %}</a>.</p>
+    </div>
 {% endblock %}

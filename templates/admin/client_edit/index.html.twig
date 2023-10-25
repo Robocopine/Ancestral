@@ -1,0 +1,57 @@
+{# templates/admin/client_edit/index.html.twig -- The index of all element of client editing #}
+
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ controller_name }}{% endblock %}
+
+{% block body %}
+
+{% if is_granted('ROLE_WEBMASTER') %}
+    <a class="btn btn-primary float-end mt-5" href="{{ path('admin_client_edit_new') }}">+</a>
+{% endif %}
+
+<h1 class="my-5">Liste des éléments du site à personnaliser</h1>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Section</th>
+            <th>Élement</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for client_edit in pagination.data %}
+        <tr>
+            <td>{{ client_edit.id }}</td>
+            <td>{{ client_edit.section.name }}</td>
+            <td>{{ client_edit.content }}</td>
+            <td>
+                <a href="{{ path('admin_client_edit_show', {'id': client_edit.id}) }}" class="text-dark pr-2"><i class="fas fa-eye"></i></a>
+                <a href="{{ path('admin_client_edit_edit', {'id': client_edit.id}) }}"><i class="fas fa-edit"></i></a>
+                {% if is_granted('ROLE_WEBMASTER') %}
+                    {% set textDelete, linkDelete, paramsDelete, modalId = "Êtes vous-sûre de supprimer <b>" ~ client_edit.section ~ "</b>?<br> Vous perdrez toutes les informations.", "admin_client_edit_delete", {'id': client_edit.id}, client_edit.id  %}
+                    {{ include("/admin/partials/_delete.html.twig") }}
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#deleteModal{{client_edit.id}}">
+                        <span><a class="text-danger"><i class="fas fa-trash"></i></a></span>
+                    </button>
+                {% endif %}
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="4">Aucune élément à personnaliser enregistrée</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="4" class="pt-4 pb-0">
+                {{ pagination.display() }}
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+{% endblock %}

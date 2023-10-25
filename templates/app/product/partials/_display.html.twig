@@ -31,8 +31,8 @@
                 <a class="text-dark btn btn-light fw-bold fs-3 mb-2" href="{{ path('cart_decrease', {'id' : product.id, 'route': app.request.get('_route') }) }}">
                     -
                 </a>
+                {% set quantity = 0 %}
                 {% if cart %}
-                    {% set quantity = 0 %}
                     {% for products in cart %}
                         {% if products.product == product %}{% set quantity = products.quantity %}{% endif %}
                     {% endfor %}
@@ -45,11 +45,9 @@
                 </a>
             </div>
             <div class="col-lg-4 mt-lg-3 text-secondary text-lg-start">
-                (
-                    {{ (product.price * quantity )|number_format(2, ',', '.') }} €
-                )
+                ({{ (product.price * quantity )|number_format(2, ',', '.') }} €)
             </div>
         </div>
     </div>
 </div>
-{% include("app/product/partials/_modal.html.twig")  with {'product': product} %}
+{% include("app/product/partials/_modal.html.twig") with {'product': product} %}

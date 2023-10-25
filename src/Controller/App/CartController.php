@@ -4,6 +4,7 @@ namespace App\Controller\App;
 
 use App\Classe\Cart;
 use App\Entity\Product;
+use App\Service\EditService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,10 +15,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CartController extends AbstractController
 {
     private $entityManager;
+    private $editService;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, EditService $editService)
     {
         $this->entityManager = $entityManager;
+        $this->editService = $editService;
     }
     
     #[Route('', name: '_index')]
@@ -26,6 +29,7 @@ class CartController extends AbstractController
         return $this->render('app/cart/index.html.twig', [
             'controller_name' => 'CartController',
             'cart' => $cart->getFull(),
+            'items' => $this->editService->getItems(),
         ]);
     }
 

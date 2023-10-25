@@ -20,28 +20,10 @@
     </div>
     <hr class="my-5">
     <div class="px-5">
-        <ul>
-            <li><a href="{{ path('account_edit') }}">Modifier mes informations personnelles</a></li>
-            <li><a href="">Modifier mes adresses</a></li>
-            <li><a href="{{ path('account_order_index') }}">Gérer mes commandes</a></li>    
+        <ul class="list-group">
+            <a href="{{ path('account_edit') }}" class="list-group-item list-group-item-action">Modifier mes informations personnelles</a>
+            <a href="{{ path('account_order_index') }}" class="list-group-item list-group-item-action">Gérer mes commandes</a>
         </ul>
-    </div>
-
-    <hr class="my-5">
-    <div class="px-5">
-        <a href="" class="btn btn-primary  float-end">Ajouter une adresse</a>
-        <h2 class="h3 mb-5">Mes adresses</h1>
-
-        {% if user.addresses is not empty %}
-            {# for %}
-            {% endfor #}
-
-        {% else %}
-            <p class="text-center">
-                Vous n'avez pas encore enregistré une adresse dans votre compte client.
-                Pour en ajouter une, <a href="">cliquez ici</a>.
-            </p>
-        {% endif %}
     </div>
 </div>
 {% endblock %}

@@ -38,3 +38,24 @@ if(sessionStorage.getItem("legalAge") == 1){
     $('#modalLegalAge').modal('show');
 }
 
+const clearInput = () => {
+    const input = document.getElementsByTagName("input")[0];
+    input.value = "";
+}
+  
+const clearBtn = document.getElementById("clear-btn");
+clearBtn.addEventListener("click", clearInput);
+
+window.onscroll = function() {myFunction()};
+
+var topNav = document.getElementById("myTopNav");
+var sticky = topNav.offsetTop;
+
+function myFunction() {
+  if (window.pageYOffset > sticky) {
+    topNav.classList.add("sticky");
+  } else {
+    topNav.classList.remove("sticky");
+  }
+}
+  

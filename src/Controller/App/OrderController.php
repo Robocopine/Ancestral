@@ -12,6 +12,7 @@ use App\Entity\Product;
 use Stripe\StripeClient;
 use App\Form\App\OrderType;
 use App\Entity\OrderDetails;
+use App\Service\EditService;
 use App\Form\Security\AddressType;
 use App\Repository\AddressRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,9 +25,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class OrderController extends AbstractController
 {
     private $entityManager;
+    private $editService;
 
-    public function __construct(EntityManagerInterface $entityManager){
+    public function __construct(EntityManagerInterface $entityManager, EditService $editService)
+    {
         $this->entityManager = $entityManager;
+        $this->editService = $editService;
     }
 
     #[Route('', name: 'index')]
@@ -48,11 +52,13 @@ class OrderController extends AbstractController
             return $this->redirectToRoute('order_index', [], Response::HTTP_SEE_OTHER);
         }
 
+
         return $this->render('app/order/index.html.twig', [
             'form' => $form->createView(),
             'controller_name' => 'OrderController',
             'cartFull' => $cart->getFull(),
             'formAddress' => $formAddress,
+            'items' => $this->editService->getItems(),
         ]);
     }
 
@@ -111,6 +117,7 @@ class OrderController extends AbstractController
                 'carrier' => $carriers,
                 'delivery' => $delivery_content,
                 'reference' => $order->getReference(),
+                'items' => $this->editService->getItems(),
             ]);
 
             return $this->redirectToroute('cart_index');
@@ -143,6 +150,7 @@ class OrderController extends AbstractController
             'carrier' => $carrier,
             'delivery' => $order->getDelivery(),
             'reference' => $order->getReference(),
+            'items' => $this->editService->getItems(),
         ]);
     }
 
@@ -167,6 +175,7 @@ class OrderController extends AbstractController
             'carrier' => $carrier,
             'delivery' => $order->getDelivery(),
             'reference' => $order->getReference(),
+            'items' => $this->editService->getItems(),
         ]);
     }
 }

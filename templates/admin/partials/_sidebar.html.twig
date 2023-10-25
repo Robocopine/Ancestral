@@ -31,14 +31,16 @@
                     Commandes
                 </a>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                    Layouts
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-paintbrush"></i></div>
+                    Mode édition
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="layout-static.html">Static Navigation</a>
-                        <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                        <a class="nav-link" href="{{ path('admin_client_edit_index')}}">Éléments</a>
+                        {% if is_granted('ROLE_WEBMASTER') %}
+                            <a class="nav-link" href="{{ path('admin_section_index')}}">Sections</a>
+                        {% endif %}
                     </nav>
                 </div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
