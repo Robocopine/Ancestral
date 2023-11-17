@@ -31,13 +31,12 @@
     </button>
 </div> 
 {#}
-<h2 class="text-center my-5">{% trans %}Distillerie - Micro-brasserie{% endtrans %}</h2>
+<h2 class="text-center my-5">{% trans %}Micro-brasserie - Péruwelz{% endtrans %}</h2>
 <div class="container mt-3 mb-5">
     <div class="row mx-lg-1">
-        <div class="col-md-6 p-1"><img src="/src/edit/img/test.jpg" class="img-fluid rounded" alt=""/></div>
-        <div class="col-md-6 p-1"><img src="/src/edit/img/test.jpg" class="img-fluid rounded" alt=""/></div>
-        <div class="col-md-6 p-1"><img src="/src/edit/img/test.jpg" class="img-fluid rounded" alt=""/></div>
-        <div class="col-md-6 p-1"><img src="/src/edit/img/test.jpg" class="img-fluid rounded" alt=""/></div>
+        {% for catgory in categories %}
+            <div class="col-md-6 p-1"><img src="/src/edit/img/test.jpg" class="img-fluid rounded" alt=""/></div>
+        {% endfor %}
     </div>
 </div>
 

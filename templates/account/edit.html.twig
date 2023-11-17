@@ -4,13 +4,6 @@
 
 {% form_theme form _self %}
 
-{% block sideMenu %}
-    <aside class="col-2 border-end p-5">
-        <h2 class="my-5">Filtrer</h2>
-        <div class="col-10">{{ form(formSearch, {'action': path('product_index'), 'method': 'GET'}) }}</div>
-    </aside>
-{% endblock %}
-
 {% block body %}
     <div class="mx-auto row p-5">
         <h1 class="h3 mb-5">Mon compte</h1>
@@ -19,10 +12,6 @@
             <button type="submit" class="btn btn-primary my-3">{% trans %}Modifier{% endtrans %}</button>
         {{ form_end(form) }}
     </div>
-{% endblock %}
-
-{% block sideCart %}
-    {{ sessionCart.display() }}
 {% endblock %}
 
 {% block _account_addresses_widget %}

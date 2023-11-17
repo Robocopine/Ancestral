@@ -5,13 +5,16 @@ namespace App\Controller\App;
 use DateTime;
 use App\Classe\Cart;
 use App\Entity\Order;
+use App\Classe\Search;
 use DateTimeImmutable;
 use App\Entity\Address;
 use App\Entity\Carrier;
 use App\Entity\Product;
 use Stripe\StripeClient;
 use App\Form\App\OrderType;
+use App\Service\PdfService;
 use App\Entity\OrderDetails;
+use App\Form\App\SearchType;
 use App\Service\EditService;
 use App\Form\Security\AddressType;
 use App\Repository\AddressRepository;
@@ -52,13 +55,18 @@ class OrderController extends AbstractController
             return $this->redirectToRoute('order_index', [], Response::HTTP_SEE_OTHER);
         }
 
-
+        // Filter by name and category
+        $search = new Search();
+        $formSearch = $this->createForm(SearchType::class, $search);
+        $formSearch->handleRequest($request);
+        
         return $this->render('app/order/index.html.twig', [
             'form' => $form->createView(),
             'controller_name' => 'OrderController',
             'cartFull' => $cart->getFull(),
             'formAddress' => $formAddress,
             'items' => $this->editService->getItems(),
+            'formSearch' => $formSearch,
         ]);
     }
 
@@ -71,6 +79,11 @@ class OrderController extends AbstractController
         ]);
 
         $form->handleRequest($request);
+
+        // Filter by name and category
+        $search = new Search();
+        $formSearch = $this->createForm(SearchType::class, $search);
+        $formSearch->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
             $date = new DateTimeImmutable('now');
@@ -118,15 +131,31 @@ class OrderController extends AbstractController
                 'delivery' => $delivery_content,
                 'reference' => $order->getReference(),
                 'items' => $this->editService->getItems(),
+                'formSearch' => $formSearch,
             ]);
 
             return $this->redirectToroute('cart_index');
         } 
     }
 
-    #[Route('/merci/{stripeSessionId}', name: 'validate')]
-    public function validate($stripeSessionId, Cart $cart)
+    #[Route('/pdf/{stripeSessionId}', name: 'pdf')]
+    public function generatePdf($stripeSessionId, PdfService $pdf)
     {
+        $html = $this->render('app/order/pdf.html.twig', [
+            'stripeSessionId' => $stripeSessionId,
+        ]);
+
+        $pdf->showPdfFile($html);
+    }
+
+    #[Route('/merci/{stripeSessionId}', name: 'validate')]
+    public function validate($stripeSessionId, Cart $cart, Request $request)
+    {
+        // Filter by name and category
+        $search = new Search();
+        $formSearch = $this->createForm(SearchType::class, $search);
+        $formSearch->handleRequest($request);
+
         $order = $this->entityManager->getRepository(Order::class)->findOneByStripeSessionId($stripeSessionId);
         if(!$order || ($order->getUser() != $this->getUser())) {
             return $this->redirectToRoute('home');
@@ -151,14 +180,19 @@ class OrderController extends AbstractController
             'delivery' => $order->getDelivery(),
             'reference' => $order->getReference(),
             'items' => $this->editService->getItems(),
+            'formSearch' => $formSearch,
         ]);
     }
 
     #[Route('/erreur/{stripeSessionId}', name: 'cancel')]
-    public function cancel($stripeSessionId)
+    public function cancel($stripeSessionId, Request $request)
     {
         $order = $this->entityManager->getRepository(Order::class)->findOneByStripeSessionId($stripeSessionId);
-        
+        // Filter by name and category
+        $search = new Search();
+        $formSearch = $this->createForm(SearchType::class, $search);
+        $formSearch->handleRequest($request);
+
         if(!$order || ($order->getUser() != $this->getUser())) {
             return $this->redirectToRoute('home');
         }
@@ -176,6 +210,7 @@ class OrderController extends AbstractController
             'delivery' => $order->getDelivery(),
             'reference' => $order->getReference(),
             'items' => $this->editService->getItems(),
+            'formSearch' => $formSearch,
         ]);
     }
 }

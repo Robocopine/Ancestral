@@ -1,6 +1,6 @@
 {# templates/app/partials/_navtop.html.twig -- Nav Top of app template  #}
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top d-flex w-100 row">
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top d-flex row">
     <div class="ps-5 col-4">
         <div id="search" class="ms-5">
             {% if app.request.attributes.get('_route_params')['categoryName'] is defined and app.request.attributes.get('_route_params')['categoryName'] != "tout" %}
@@ -22,7 +22,7 @@
     <div class="collapse navbar-collapse mx-auto text-center col-lg-4" id="navbarSupportedContent">
         <ul class="navbar-nav mx-auto text-center">
             <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{ path('home') }}">{% trans %}Accueil{% endtrans %}</a></li>
-            <li class="nav-item"><a class="nav-link" href="#!">{% trans %}À propos{% endtrans %}</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ path('about') }}">{% trans %}À propos{% endtrans %}</a></li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="{{ path('product_index') }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">{% trans %}Nos produits{% endtrans %}</a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">

@@ -2,13 +2,6 @@
 
 {% block title %}{{ controller_name }}{% endblock %}
 
-{% block sideMenu %}
-    <aside class="col-2 border-end p-5">
-        <h2 class="my-5">Filtrer</h2>
-        <div class="col-10">{{ form(formSearch, {'action': path('product_index'), 'method': 'GET'}) }}</div>
-    </aside>
-{% endblock %}
-
 {% block body %}
     <div class="container-fluid px-0">
         <div class="p-5">
@@ -66,6 +59,3 @@
     </div>
 {% endblock %}
 
-{% block sideCart %}
-    {{ sessionCart.display() }}
-{% endblock %}

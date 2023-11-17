@@ -21,6 +21,9 @@ class Category
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class)]
     private Collection $products;
 
+    #[ORM\Column(length: 255)]
+    private ?string $banner = null;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -75,5 +78,17 @@ class Category
 
     public function __toString(){
         return $this->getName();
+    }
+
+    public function getBanner(): ?string
+    {
+        return $this->banner;
+    }
+
+    public function setBanner(string $banner): self
+    {
+        $this->banner = $banner;
+
+        return $this;
     }
 }

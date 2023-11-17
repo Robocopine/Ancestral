@@ -1,19 +1,8 @@
 {# templates/app/partials/_sidecart.html.twig -- Side cart of app template  #}
 
-<aside class="col-2 border-start p-5 mt-5 d-lg-block d-none">
-    <h3 class="text-center">{% trans %}Mon panier{% endtrans %} <i class="fa-solid fa-basket-shopping ms-1"></i></h3>
-    <ul class="p-5">
-        {% for products in cartFull %}
-            {% set product = products.product %}
-            <li>{{ products.quantity }}x <b class="ms-1">{{ product.subtitle }}</b></li>
-        {% endfor %}
-    </ul>
-    <p class="text-center"><a class="btn btn-primary btn-block" href="{{ path('cart_index') }}">{% trans %}Accéder au panier{% endtrans %}</a></p>
-</aside>
-
 {# Display xs for cart #}
 <div id="sideCartMobile" class="modal fade" tabindex="-1"  role="dialog" aria-labelledby="gridSystemModalLabel">
-    <div class="modal-dialog"  role="document">
+    <div class="modal-dialog modal-dialog-centered"  role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close border border-light" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true"><b>X</b></span></button>

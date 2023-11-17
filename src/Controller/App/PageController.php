@@ -6,10 +6,12 @@ use App\Classe\Cart;
 use App\Classe\Mail;
 use App\Classe\Search;
 use App\Entity\Product;
+use App\Entity\Category;
 use App\Form\App\SearchType;
 use App\Service\CartService;
 use App\Service\EditService;
 use App\Service\LoginService;
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,6 +38,7 @@ class PageController extends AbstractController
         );
 
         $lastProducts = $this->entityManager->getRepository(Product::class)->findLastProducts();
+        $categories = $this->entityManager->getRepository(Category::class)->findAll();
         // Filter by name and category
         $search = new Search();
         $formSearch = $this->createForm(SearchType::class, $search);
@@ -48,6 +51,26 @@ class PageController extends AbstractController
             'formSearch' => $formSearch,
             'limitedProducts' => $limitedProducts,
             'lastProducts' => $lastProducts,
+            'categories' => $categories,
+            'search' => $search,
+            'items' => $this->editService->getItems(),
+        ]);
+    }
+
+    #[Route('/à-propos', name: 'about')]
+    public function about(EditService $editService, CartService $sessionCart, Cart $cart, Request $request): Response
+    {
+        $lastProducts = $this->entityManager->getRepository(Product::class)->findLastProducts();
+        // Filter by name and category
+        $search = new Search();
+        $formSearch = $this->createForm(SearchType::class, $search);
+        $formSearch->handleRequest($request);
+
+        return $this->render('app/page/about.html.twig', [
+            'controller_home' => 'controller_home',
+            'cart' => $cart->getFull(),
+            'sessionCart' => $sessionCart,
+            'formSearch' => $formSearch,
             'search' => $search,
             'items' => $this->editService->getItems(),
         ]);

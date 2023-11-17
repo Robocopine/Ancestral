@@ -2,6 +2,17 @@
 
 <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
+        {% if app.user %}
+            {% set user = app.user %}
+            {% if "ROLE_ADMIN" in user.roles %}
+            {% set elementUpdate, linkUpdate, paramsUpdate, modalId = items['logo_header'], "admin_client_edit_edit", {'id' : 2}, 2  %}
+                    <button type="button" class="btn float-xl-right" style="box-shadow:none;" data-bs-toggle="modal" data-bs-target="#updateModal2">
+                        <span><a class="text-primary"><i class="fas fa-edit"></i></a></span>
+                    </button>
+                    {% include "/app/partials/_edit.html.twig"  %}
+                {% endif %}
+            {% endif %}
+            
         <div class="text-center text-white">
             <img src="{{ asset('./src/edit/img/' ~ items['logo_header']) }}" class="img-fluid"/>
         </div>

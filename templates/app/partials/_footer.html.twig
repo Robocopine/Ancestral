@@ -16,26 +16,28 @@
         </li>
     </ul>
     <pre class="float-end"> </pre>
-    <!-- Icon cartMobile -->
-    <a href="" data-bs-toggle="modal" data-bs-target="#sideCartMobile" class="text-dark float-end text-dark float-end border border-dark rounded-circle border-5 p-2 bg-light position-relative" width="40px" height="40px">
-        <span class="rounded-circle ">
-            <i class="fa-solid fa-basket-shopping"></i>
-        </span>
-        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
-            {% if app.session.get('cart') %}
-                {% set cart  = app.session.get('cart') %}
-                {% set total = null %}
-                {% for product in cart %}
-                    {% set total =+ product %}
-                {% endfor %}
-                {{ total }}
-            {% else %}
-                0
-            {% endif %}
-            <span class="visually-hidden">{% trans %}Nombres d'articles{% endtrans %}</span>
-        </span>
-    </a>
-    <pre class="float-end"> </pre>
+    {% if app.request.attributes.get('_route') is not same as 'cart_index' and 'order_index' and 'order_resume' and 'order_validate' and 'order_cancel' %}
+        <!-- Icon cartMobile -->
+        <a href="" data-bs-toggle="modal" data-bs-target="#sideCartMobile" class="text-dark float-end text-dark float-end border border-dark rounded-circle border-5 p-2 bg-light position-relative" width="40px" height="40px">
+            <span class="rounded-circle ">
+                <i class="fa-solid fa-basket-shopping"></i>
+            </span>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+                {% if app.session.get('cart') %}
+                    {% set cart  = app.session.get('cart') %}
+                    {% set total = null %}
+                    {% for product in cart %}
+                        {% set total =+ product %}
+                    {% endfor %}
+                    {{ total }}
+                {% else %}
+                    0
+                {% endif %}
+                <span class="visually-hidden">{% trans %}Nombres d'articles{% endtrans %}</span>
+            </span>
+        </a>
+        <pre class="float-end"> </pre>
+    {% endif %}
     <!-- Icon Page Up -->
     <a href="#top" class="text-dark float-end text-dark float-end border border-dark rounded-circle border-5 p-2 bg-light" width="40px" height="40px">
         <span class="rounded-circle ">

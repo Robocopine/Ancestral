@@ -3,7 +3,9 @@
 namespace App\Controller\App;
 
 use App\Classe\Cart;
+use App\Classe\Search;
 use App\Entity\Product;
+use App\Form\App\SearchType;
 use App\Service\EditService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,12 +26,17 @@ class CartController extends AbstractController
     }
     
     #[Route('', name: '_index')]
-    public function index(Cart $cart): Response
+    public function index(Cart $cart, Request $request): Response
     {
+        // Filter by name and category
+        $search = new Search();
+        $formSearch = $this->createForm(SearchType::class, $search);
+        $formSearch->handleRequest($request);
         return $this->render('app/cart/index.html.twig', [
             'controller_name' => 'CartController',
             'cart' => $cart->getFull(),
             'items' => $this->editService->getItems(),
+            'formSearch' => $formSearch,
         ]);
     }
 
