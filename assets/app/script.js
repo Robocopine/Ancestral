@@ -42,20 +42,28 @@ const clearInput = () => {
     const input = document.getElementsByTagName("input")[0];
     input.value = "";
 }
-  
-const clearBtn = document.getElementById("clear-btn");
-clearBtn.addEventListener("click", clearInput);
 
-window.onscroll = function() {myFunction()};
+const clearBtn = document.getElementById("clear-btn");
+if(clearBtn){
+  clearBtn.addEventListener("click", clearInput);
+}
+
+
+
 
 var topNav = document.getElementById("myTopNav");
-var sticky = topNav.offsetTop;
+if(topNav){
+  var sticky = topNav.offsetTop;
 
-function myFunction() {
-  if (window.pageYOffset > sticky) {
-    topNav.classList.add("sticky");
-  } else {
-    topNav.classList.remove("sticky");
+  window.onscroll = function() {myFunction()};
+
+  function myFunction() {
+    if (window.pageYOffset > sticky) {
+      topNav.classList.add("sticky");
+    } else {
+      topNav.classList.remove("sticky");
+    }
   }
+    
 }
-  
+

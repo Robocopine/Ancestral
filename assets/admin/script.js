@@ -8,12 +8,14 @@
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/admin.scss';
 
-import './js/datatables-simple-demo';
+
 // start the Stimulus application
 import './../bootstrap';
 
-import './js/demo/chart-area-demo';
-import './js/demo/chart-bar-demo';
+
+// import './js/datatables-simple-demo';
+// import './js/demo/chart-area-demo';
+// import './js/demo/chart-bar-demo';
 
 require('@fortawesome/fontawesome-free/css/all.min.css');
 require('@fortawesome/fontawesome-free/js/all.js');
