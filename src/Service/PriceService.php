@@ -2,24 +2,19 @@
 
 namespace App\Service;
 
-use App\Classe\Cart;
-
 class PriceService
 {
-    public function __construct(Cart $cart){
-        $this->cart = $cart;
-    }
 
-    public function getTotalWeight(){
+    public function getBoxesWithPackagingWeight($cart){
         $productsWeight = 0;
-        foreach($this->cart->getFull() as $product){
+        foreach($cart->getFull() as $product){
             $productsWeight = $productsWeight + ($product['product']->getWeight() * $product['quantity']);
         }
     }
 
-    public function getBoxbyProductWidth(){
+    public function getProductsWidth($cart){
         $productsBox = 0;
-        foreach($this->cart->getFull() as $product){
+        foreach($cart->getFull() as $product){
             $width = $product['product']->getWidth();
             switch($width) {
                 case $width == "S":
@@ -40,9 +35,9 @@ class PriceService
         return $productsBox;
     }
 
-    public function getTotalBPOSTCosts(){
+    public function getTotalBPOSTCosts($weight){
         $total = 6.40; // starting cost home delivery 
-        $weight = $this->getTotalWeight();
+        //$weight = $this->getTotalWeight();
         $weightMin = 0;
 
         if($weight > 30){
@@ -90,6 +85,13 @@ class PriceService
         $total = $price + ($price * $tva);
         // Stripe Margin calculation (1,5%)
         $total = $price * 100 / 98.5;
+        return $total;
+    }
+
+    public function getStripePrice($price){
+        // Stripe Margin calculation (1,5%)
+        $total = $price * 100 / 98.5;
+        $total =number_format((float)$total, 2, '.', '');
         return $total;
     }
 

@@ -48,9 +48,6 @@ if(clearBtn){
   clearBtn.addEventListener("click", clearInput);
 }
 
-
-
-
 var topNav = document.getElementById("myTopNav");
 if(topNav){
   var sticky = topNav.offsetTop;

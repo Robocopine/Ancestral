@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\CarrierRepository;
+use App\Service\PriceService;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CarrierRepository;
 
 #[ORM\Entity(repositoryClass: CarrierRepository::class)]
 class Carrier
@@ -54,6 +55,8 @@ class Carrier
 
     public function getPrice(): ?float
     {
+        //$priceService = new PriceService;
+        //$price = $priceService->getStripePrice($this->price);
         return $this->price;
     }
 
